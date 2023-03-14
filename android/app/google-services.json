@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "817910286585",
+    "firebase_url": "https://project-1-pracice-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "project-1-pracice",
+    "storage_bucket": "project-1-pracice.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:817910286585:android:b1d67186f1ffbbe9483a28",
+        "android_client_info": {
+          "package_name": "com.example.project_1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "817910286585-21fno2rg6jt29vq242d36kbl46i3ijev.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAUQa5auU4jfnGlW5FvT3pCgbHRd7KYWo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "817910286585-21fno2rg6jt29vq242d36kbl46i3ijev.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "817910286585-db1edh8sjsp352fulglljt574287udqq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.project1"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

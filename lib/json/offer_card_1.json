@@ -1,0 +1,56 @@
+
+    {
+    "summerCardData": [
+      {
+        "img": "https://images.unsplash.com/photo-1608667508764-33cf0726b13a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cnVubmluZyUyMHNob2V8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
+        "p_name": "Sports Shoe",
+        "offers": "Min. 50% off"
+      },
+      {
+        "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ_DCwYMvr_IRjhCphACtoqDLfuwS06SFGyXexZA9geA&s",
+        "p_name": "Mens Caps",
+        "offers": "Min. 60% off"
+      },
+      {
+        "img": "https://fdn2.gsmarena.com/vv/pics/xiaomi/xiaomi-poco-x4-pro-1.jpg",
+        "p_name": "Mobile",
+        "offers": "Min. 12% off"
+      },
+      {
+        "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfLntF3L_HNVoJQd81G8-TWMlM1OgMMnBHcaMOpPU2DA&s",
+        "p_name": "Men's Track Pants",
+        "offers": "Min. 50% off"
+      }],
+      "topSectionCardData": [
+        {
+          "img": "https://images.unsplash.com/photo-1608667508764-33cf0726b13a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cnVubmluZyUyMHNob2V8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
+          "p_name": "POCO Mobiles",
+          "offers": "Most-loved"
+        },
+        {
+          "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ_DCwYMvr_IRjhCphACtoqDLfuwS06SFGyXexZA9geA&s",
+          "p_name": "Mens Caps",
+          "offers": "Min. 60% off"
+        },
+        {
+          "img": "https://fdn2.gsmarena.com/vv/pics/xiaomi/xiaomi-poco-x4-pro-1.jpg",
+          "p_name": "Mobile",
+          "offers": "Min. 12% off"
+        },
+        {
+          "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfLntF3L_HNVoJQd81G8-TWMlM1OgMMnBHcaMOpPU2DA&s",
+          "p_name": "Men's Track Pants",
+          "offers": "Min. 50% off"
+        },
+        {
+          "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfLntF3L_HNVoJQd81G8-TWMlM1OgMMnBHcaMOpPU2DA&s",
+          "p_name": "Men's Track Pants",
+          "offers": "Min. 50% off"
+        },
+        {
+          "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfLntF3L_HNVoJQd81G8-TWMlM1OgMMnBHcaMOpPU2DA&s",
+          "p_name": "Men's Track Pants",
+          "offers": "Min. 50% off"
+        }
+      ]
+    }
