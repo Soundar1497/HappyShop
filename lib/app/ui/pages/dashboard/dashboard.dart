@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:project_1/app/ui/pages/buyers/home/home.dart';
 
+import '../buyers/account/Account.dart';
+import '../buyers/cart/dart.dart';
+import '../buyers/categories/categories.dart';
+
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
 
@@ -15,9 +19,9 @@ class _DashboardState extends State<Dashboard> {
 
   final List<Widget> _mainview = <Widget>[
     const HomePage(),
-    const HomePage(),
-    const HomePage(),
-    const HomePage(),
+    const Categories(),
+    const Cart(),
+    const Account(),
   ];
 
   void _value(index) {
@@ -27,11 +31,10 @@ class _DashboardState extends State<Dashboard> {
   }
 
   @override
-  Widget build(BuildContext context)
+  Widget build(BuildContext context) {
+    // old sample
 
-  // old sample
-
-  /*
+    /*
   {
     return Scaffold(
       appBar: AppBar(
@@ -51,24 +54,24 @@ class _DashboardState extends State<Dashboard> {
 
 // new page
 
-  // LIST OF PAGE
-  {
-    Widget child;
-    child = _mainview[_index];
-    switch (_index) {
-      case 0:
-        child = _mainview[0];
-        break;
-      case 1:
-        child = _mainview[1];
-        break;
-      case 2:
-        child = _mainview[2];
-        break;
-      case 3:
-        child = _mainview[3];
-        break;
-    }
+    // LIST OF PAGE
+    // {
+    //   Widget child;
+    //   child = _mainview[_index];
+    //   switch (_index) {
+    //     case 0:
+    //       child = _mainview[0];
+    //       break;
+    //     case 1:
+    //       child = _mainview[1];
+    //       break;
+    //     case 2:
+    //       child = _mainview[2];
+    //       break;
+    //     case 3:
+    //       child = _mainview[3];
+    //       break;
+    //   }
 
     return Scaffold(
         // Main Bottom Navigation Bar

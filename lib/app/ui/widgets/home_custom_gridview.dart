@@ -1,32 +1,36 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:project_1/app/ui/themes/colors.dart';
 import 'package:project_1/app/ui/themes/textstyle.dart';
 import 'package:project_1/json/json_controller/offer_card_1_controller.dart';
 
-class CustomGridView extends StatefulWidget {
-  CustomGridView(
-      {Key? key,
-      required this.height,
-      this.width,
-      required this.readJsonData,
-      required this.crossAxisCount,
-      this.decoration,
-      required this.dataText})
-      : super(key: key);
+import '../../../json/json_controller/grid_list_card_controller.dart';
+
+class CustomGridViewOne extends StatefulWidget {
+  CustomGridViewOne({
+    Key? key,
+    required this.height,
+    required this.cardIndex,
+    this.width,
+    required this.crossAxisCount,
+    this.decoration,
+    required this.dataText,
+  }) : super(key: key);
 
   final double height;
   final double? width;
   final int crossAxisCount;
   Decoration? decoration;
-  Function readJsonData;
   final String dataText;
+  final int cardIndex;
 
   @override
-  State<CustomGridView> createState() => _CustomGridViewState();
+  State<CustomGridViewOne> createState() => _CustomGridViewOneState();
 }
 
-class _CustomGridViewState extends State<CustomGridView> {
+class _CustomGridViewOneState extends State<CustomGridViewOne> {
   late double childRatio;
 
   // final List<String> _list = ['a', 'b', 'c', 'd'];
@@ -35,8 +39,16 @@ class _CustomGridViewState extends State<CustomGridView> {
   //
   Future<List<CardData>?> readOffer1() async {
     final data = await rootBundle.loadString('lib/json/offer_card_1.json');
+    final offerCard = jsonDecode(data) as Map<String, dynamic>;
+    var obj = person.fromJson(offerCard);
+    List card = [
+      obj.summerCardData,
+      obj.topSectionCardData,
+      obj.bestQualityCardData
+    ];
 
-    return widget.readJsonData(data);
+    // return widget.readJsonData(data);
+    return card[widget.cardIndex];
   }
 
   @override
@@ -59,7 +71,7 @@ class _CustomGridViewState extends State<CustomGridView> {
 
         //
         return Container(
-          margin: const EdgeInsets.symmetric(vertical: 20),
+          margin: const EdgeInsets.symmetric(vertical: 10),
           width: widget.width ?? MediaQuery.of(context).size.width,
           //widget.width
           height: widget.height ?? 600,
@@ -207,67 +219,74 @@ class _CustomGridViewState extends State<CustomGridView> {
                   crossAxisSpacing: 15),
               itemBuilder: (context, i) {
                 return Card(
-                    child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: Stack(
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: widget.crossAxisCount == 2
-                            ? 110 / childRatio
-                            : 60 / childRatio,
-                        // color: Colors.red,
-                        child: ClipRect(
-                            child: Image.network(
-                          items[i].img.toString(),
-                          // "",
-                          // items[i].summerCardData,
-                          // items[i].summerOffer.img.toString(),
-                          fit: BoxFit.contain,
-                        )),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        margin: EdgeInsets.only(
-                            top: widget.crossAxisCount == 2
-                                ? 116 / childRatio
-                                : 65 / childRatio,
-                            left: 10,
-                            right: 10),
-                        // color: Colors.yellow,
-                        child: Text(
-                          items[i].p_name.toString(),
-                          // "",
-                          // items[i].p_name.toString(),
-                          // '${items[i].p_name}',
-                          textAlign: TextAlign.left,
-                          style: widget.crossAxisCount == 2
-                              ? CustomTextStyle.p1(context)
-                              : CustomTextStyle.p2(context),
+                    child: InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, items[i].navigator.toString());
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: Stack(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          width: MediaQuery.of(context).size.width,
+                          height: widget.crossAxisCount == 2
+                              ? 110 / childRatio
+                              : 60 / childRatio,
+                          // color: Colors.red,
+                          child: ClipRect(
+                              child: Image.network(
+                            items[i].img.toString(),
+                            // "",
+                            // items[i].summerCardData,
+                            // items[i].summerOffer.img.toString(),
+                            fit: BoxFit.contain,
+                            alignment: Alignment.center,
+                          )),
                         ),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        margin: EdgeInsets.only(
-                            top: widget.crossAxisCount == 2
-                                ? 135 / childRatio
-                                : 85 / childRatio,
-                            left: 10,
-                            right: 10),
-                        // color: Colors.yellow,
-                        child: Text(
-                          items[i].offers.toString(),
-
-                          // "",
-                          // items[i].offers.toString(),
-
-                          // items[i].offers.toString(),
-                          style: widget.crossAxisCount == 2
-                              ? CustomTextStyle.hl1(context)
-                              : CustomTextStyle.hl2(context),
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          margin: EdgeInsets.only(
+                              top: widget.crossAxisCount == 2
+                                  ? 116 / childRatio
+                                  : 65 / childRatio,
+                              left: 10,
+                              right: 10),
+                          // color: Colors.yellow,
+                          child: Text(
+                            items[i].p_name.toString(),
+                            // "",
+                            // items[i].p_name.toString(),
+                            // '${items[i].p_name}',
+                            textAlign: TextAlign.left,
+                            style: widget.crossAxisCount == 2
+                                ? CustomTextStyle.p1(context)
+                                : CustomTextStyle.p2(context),
+                          ),
                         ),
-                      ),
-                    ],
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          margin: EdgeInsets.only(
+                              top: widget.crossAxisCount == 2
+                                  ? 135 / childRatio
+                                  : 86.5 / childRatio,
+                              left: 10,
+                              right: 10),
+                          // color: Colors.yellow,
+                          child: Text(
+                            items[i].offers.toString(),
+
+                            // "",
+                            // items[i].offers.toString(),
+
+                            // items[i].offers.toString(),
+                            style: widget.crossAxisCount == 2
+                                ? CustomTextStyle.hl1(context)
+                                : CustomTextStyle.hl2(context),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ));
               },
@@ -286,3 +305,215 @@ class _CustomGridViewState extends State<CustomGridView> {
 //
 //
 //
+
+class CustomGridViewTwo extends StatefulWidget {
+  CustomGridViewTwo({Key? key, required this.cardIndex, required this.color})
+      : super(key: key);
+
+  final int cardIndex;
+  final Color color;
+
+  @override
+  State<CustomGridViewTwo> createState() => _CustomGridViewTwoState();
+}
+
+class _CustomGridViewTwoState extends State<CustomGridViewTwo> {
+  late double childRatio;
+
+  Future<List<GridListCardData>?> readGridListData() async {
+    final data = await rootBundle.loadString('lib/json/grid_list_card.json');
+    final gridListData = jsonDecode(data) as Map<String, dynamic>;
+    var obj = GridCardData.fromJson(gridListData);
+    List card = [
+      obj.gridList_1_2e,
+      obj.gridList_2_4e,
+    ];
+    return card[widget.cardIndex];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: readGridListData(),
+      builder: (context, AsyncSnapshot<List<GridListCardData>?> data) {
+        if (data.hasError) {
+        } else if (data.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        }
+        //
+        var items = data.data as List<GridListCardData>;
+
+        //
+        return Container(
+          margin: const EdgeInsets.symmetric(vertical: 0),
+          child: GridView.builder(
+            padding: EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+            itemCount: items.length,
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                childAspectRatio: 0.65,
+                mainAxisSpacing: 15,
+                crossAxisCount: 2,
+                crossAxisSpacing: 15),
+            itemBuilder: (context, i) {
+              return Card(
+                  color: widget.color,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(
+                          context, items[i].navigator.toString());
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: Stack(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 7),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: 175,
+                              // color: Colors.red,
+                              child: ClipRect(
+                                  child: Image.network(
+                                items[i].img.toString(),
+                                fit: BoxFit.fill,
+                                alignment: Alignment.center,
+                              )),
+                            ),
+                          ),
+                          items[i].position.toString().contains('true')
+                              ? Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 3),
+                                  child: Container(
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 2),
+                                    width: MediaQuery.of(context).size.width,
+                                    color: Color(0xffe3fcbf),
+                                    child: Text(
+                                      items[i].date_validity.toString(),
+                                      textAlign: TextAlign.center,
+                                      style: CustomTextStyle.hl3(context),
+                                    ),
+                                  ),
+                                )
+                              : items[i].position.toString().contains('false')
+                                  ? Padding(
+                                      padding: const EdgeInsets.only(top: 3),
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 2, horizontal: 6),
+                                        width: 120,
+                                        decoration: BoxDecoration(
+                                          color: const Color(0xffe70101),
+                                          shape: BoxShape.rectangle,
+                                          borderRadius: const BorderRadius.only(
+                                              bottomLeft: Radius.circular(25.0),
+                                              topRight: Radius.circular(25.0)),
+                                          border:
+                                              Border.all(color: Colors.white70),
+                                        ),
+                                        child: Text(
+                                          items[i].date_validity.toString(),
+                                          textAlign: TextAlign.center,
+                                          style: CustomTextStyle.hl4(context),
+                                        ),
+                                      ),
+                                    )
+                                  : Container(),
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            margin:
+                                EdgeInsets.only(top: 185, left: 10, right: 10),
+                            // color: Colors.yellow,
+                            child: Text(
+                              items[i].p_name.toString(),
+                              style: CustomTextStyle.h2(context),
+                            ),
+                          ),
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            margin: EdgeInsets.only(top: 208, left: 10),
+                            // color: Colors.yellow,
+                            child: Text(
+                              items[i].spec_detail.toString(),
+                              // "",
+                              // items[i].p_name.toString(),
+                              // '${items[i].p_name}',
+                              textAlign: TextAlign.left,
+                              style: CustomTextStyle.p4(context),
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              margin: const EdgeInsets.only(top: 232, left: 10),
+
+                              // color: Colors.yellow,
+                              child: Row(
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    items[i].price.toString(),
+                                    style: CustomTextStyle.hl5(context),
+                                  ),
+                                  items[i]
+                                              .old_price
+                                              .toString()
+                                              .contains("null") ||
+                                          items[i]
+                                                  .old_price
+                                                  .toString()
+                                                  .length <=
+                                              0
+                                      ? Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 5),
+                                          child: Text(
+                                            "",
+                                            style: CustomTextStyle.p3(context),
+                                          ),
+                                        )
+                                      : Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 5),
+                                          child: Text(
+                                            items[i].old_price.toString(),
+                                            // items[i].offers.toString(),
+                                            style: CustomTextStyle.p3(context),
+                                          ),
+                                        ),
+                                  items[i].offer.toString().contains("null")
+                                      ? Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 5),
+                                          child: Text(
+                                            "",
+                                            style: CustomTextStyle.p3(context),
+                                          ),
+                                        )
+                                      : Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 5),
+                                          child: Text(
+                                            items[i].offer.toString(),
+                                            // items[i].offers.toString(),
+                                            style: CustomTextStyle.hl2(context),
+                                          ),
+                                        ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ));
+            },
+          ),
+        );
+      },
+    );
+  }
+}

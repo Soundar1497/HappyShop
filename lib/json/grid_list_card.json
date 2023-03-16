@@ -1,0 +1,71 @@
+{
+  "gridList_1_2e": [
+{
+  "img": "https://rukminim1.flixcart.com/image/612/612/k6s82vk0/gas-stove/r/w/h/14449-pigeon-original-imafp5sg2sywguxv.jpeg?q=70",
+  "date_validity" : "Live for 2 Hours Only!",
+  "position" : "true",
+  "p_name": "Gas Stoves",
+  "spec_detail" : "Pigeon, Prestige & more",
+  "price": "From ₹799",
+  "old_price": "From ₹999",
+  "navigator" : "/EmptyProductPage"
+},
+    {
+      "img": "https://rukminim1.flixcart.com/image/612/612/xif0q/suitcase/j/3/v/-original-imagkychwjzgmzzr.jpeg?q=70",
+      "date_validity" : "LAST CHANCE",
+      "position" : "false",
+      "p_name": "Safari, American Tourister",
+      "spec_detail" : "Trolley Bags",
+      "price": "From ₹3,799",
+      "old_price": "From ₹7,580",
+      "navigator" : "/EmptyProductPage"
+    }
+  ],
+  "gridList_2_4e": [
+  {
+    "img": "https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T2/images/I/516HLHbiznL._AC_SR139,139_QL70_.jpg",
+    "date_validity" : "2023 New Launches",
+    "position" : "true",
+    "p_name": "Beat the Summer Heat!",
+    "spec_detail" : "Extra 10% Off on bank Card*",
+    "price": "From ₹5,499",
+    "old_price": "",
+    "offer" : "",
+    "navigator" : "/EmptyProductPage"
+  },
+  {
+    "img": "https://rukminim1.flixcart.com/image/612/612/xif0q/backpack/l/r/i/16-waterproof-large-40l-laptop-backpack-heavey-duty-40l-original-imagmazrxrf76hrk.jpeg?q=70",
+    "date_validity" : "Laptop Bags & Backpacks",
+    "position" : "none",
+    "p_name": "Laptop Bags & Backpacks",
+    "spec_detail" : "Big Deals on Bestsellers",
+    "price": "Under ₹799",
+    "old_price": "",
+    "offer" : "",
+    "navigator" : "/EmptyProductPage"
+  },
+    {
+      "img": "https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T2/images/I/712am1RDNiL._AC_SX167_QL70_.jpg",
+      "date_validity" : "Selling Fast",
+      "position" : "false",
+      "p_name": "Compaq TVs",
+      "spec_detail" : "HD | FHD |4K UHD",
+      "price": "From ₹4,999",
+      "old_price": "",
+      "offer" : "",
+      "navigator" : "/EmptyProductPage"
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1608667508764-33cf0726b13a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cnVubmluZyUyMHNob2V8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
+      "date_validity" : "Big Saving Days",
+      "position" : "false",
+      "p_name": "Gaming Laptops",
+      "spec_detail" : "Get Paytm Cashback*",
+      "price": "Min. 25% Off",
+      "old_price": "",
+      "offer" : "",
+      "navigator" : "/EmptyProductPage"
+    }
+]
+
+}

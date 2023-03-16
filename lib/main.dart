@@ -6,6 +6,7 @@ import 'package:project_1/app/ui/pages/auth/signin.dart';
 import 'package:project_1/app/ui/pages/auth/signup.dart';
 import 'package:project_1/firebase_options.dart';
 
+import 'app/ui/pages/buyers/product/empty_product_page.dart';
 import 'app/ui/pages/splash_Screen/splash_screen.dart';
 
 void main() async {
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
           '/firstScreen': (context) => const FirstScreen(),
           '/signUp': (context) => const SignUpPage(),
           '/signIn': (context) => const SignIn(),
+          '/EmptyProductPage': (context) => const EmptyProductPage(),
         });
   }
 }

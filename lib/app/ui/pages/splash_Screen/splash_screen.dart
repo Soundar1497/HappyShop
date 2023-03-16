@@ -35,8 +35,8 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   _navtofirst() async {
-    // await Future.delayed(const Duration(milliseconds: 3500), () {});
-    await Future.delayed(const Duration(milliseconds: 0), () {});
+    await Future.delayed(const Duration(milliseconds: 3500), () {});
+    // await Future.delayed(const Duration(milliseconds: 0), () {});
 
     Navigator.pushReplacement(
         context,

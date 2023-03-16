@@ -4,53 +4,77 @@
       {
         "img": "https://images.unsplash.com/photo-1608667508764-33cf0726b13a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cnVubmluZyUyMHNob2V8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
         "p_name": "Sports Shoe",
-        "offers": "Min. 50% off"
+        "offers": "Min. 50% off",
+        "navigator" : "/EmptyProductPage"
       },
       {
         "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ_DCwYMvr_IRjhCphACtoqDLfuwS06SFGyXexZA9geA&s",
         "p_name": "Mens Caps",
-        "offers": "Min. 60% off"
+        "offers": "Min. 60% off",
+        "navigator" : "/EmptyProductPage"
       },
       {
         "img": "https://fdn2.gsmarena.com/vv/pics/xiaomi/xiaomi-poco-x4-pro-1.jpg",
         "p_name": "Mobile",
-        "offers": "Min. 12% off"
+        "offers": "Min. 12% off",
+        "navigator" : "/EmptyProductPage"
       },
       {
         "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfLntF3L_HNVoJQd81G8-TWMlM1OgMMnBHcaMOpPU2DA&s",
         "p_name": "Men's Track Pants",
-        "offers": "Min. 50% off"
+        "offers": "Min. 50% off",
+        "navigator" : "/EmptyProductPage"
       }],
       "topSectionCardData": [
         {
-          "img": "https://images.unsplash.com/photo-1608667508764-33cf0726b13a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cnVubmluZyUyMHNob2V8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
-          "p_name": "POCO Mobiles",
-          "offers": "Most-loved"
+          "img": "https://image01.realme.net/general/20221125/1669360639984.png",
+          "p_name": "Realme 10 Pro 5G",
+          "offers": "Most-loved",
+          "navigator" : "/EmptyProductPage"
         },
         {
-          "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ_DCwYMvr_IRjhCphACtoqDLfuwS06SFGyXexZA9geA&s",
-          "p_name": "Mens Caps",
-          "offers": "Min. 60% off"
+          "img": "https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T2/images/I/71zlLSHbJ-L._AC_UY218_.jpg",
+          "p_name": "Electric Kettle",
+          "offers": "Grab Now",
+          "navigator" : "/EmptyProductPage"
         },
         {
-          "img": "https://fdn2.gsmarena.com/vv/pics/xiaomi/xiaomi-poco-x4-pro-1.jpg",
-          "p_name": "Mobile",
-          "offers": "Min. 12% off"
+          "img": "https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T2/images/I/81grtcmxsyL._AC_UY218_.jpg",
+          "p_name": "Multimedia Speaker",
+          "offers": "Widest Range",
+          "navigator" : "/EmptyProductPage"
         },
         {
-          "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfLntF3L_HNVoJQd81G8-TWMlM1OgMMnBHcaMOpPU2DA&s",
-          "p_name": "Men's Track Pants",
-          "offers": "Min. 50% off"
+          "img": "https://rukminim1.flixcart.com/image/200/200/xif0q/shoe/n/d/n/4-rlo141-red-tape-pink-navy-original-imaghfkawmtzpn5z.jpeg?q=70",
+          "p_name": "Running Shoes",
+          "offers": "Explore Now",
+          "navigator" : "/EmptyProductPage"
+        }
+      ],
+      "bestQualityCardData": [
+        {
+          "img": "https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T2/images/I/71LfnkRgZ4L._AC_UL320_.jpg",
+          "p_name": "Smart Watch",
+          "offers": "Wear Now",
+          "navigator" : "/EmptyProductPage"
         },
         {
-          "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfLntF3L_HNVoJQd81G8-TWMlM1OgMMnBHcaMOpPU2DA&s",
-          "p_name": "Men's Track Pants",
-          "offers": "Min. 50% off"
+          "img": "https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T2/images/I/51FAWVStZiL._AC_UY218_.jpg",
+          "p_name": "Internal SSD",
+          "offers": "Top Picks",
+          "navigator" : "/EmptyProductPage"
         },
         {
-          "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfLntF3L_HNVoJQd81G8-TWMlM1OgMMnBHcaMOpPU2DA&s",
-          "p_name": "Men's Track Pants",
-          "offers": "Min. 50% off"
+          "img": "https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T2/images/I/91AjTDzdRLL._AC_UL320_.jpg",
+          "p_name": "Rucksacks",
+          "offers": "New Collection",
+          "navigator" : "/EmptyProductPage"
+        },
+        {
+          "img": "https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T2/images/I/51bJIIFeuRL._AC_UL320_.jpg",
+          "p_name": "Slippers & flip flops",
+          "offers": "New Pairs",
+          "navigator" : "/EmptyProductPage"
         }
       ]
     }

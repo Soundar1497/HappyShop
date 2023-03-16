@@ -230,6 +230,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
+  flutter_sticky_widgets:
+    dependency: "direct main"
+    description:
+      name: flutter_sticky_widgets
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.3"
   flutter_switch:
     dependency: "direct main"
     description:
@@ -247,6 +254,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  get:
+    dependency: "direct main"
+    description:
+      name: get
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.6.5"
   http_parser:
     dependency: transitive
     description:
