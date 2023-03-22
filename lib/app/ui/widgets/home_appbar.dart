@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
-import 'package:project_1/app/controllers/authentication.dart';
+import 'package:provider/provider.dart';
+
+import '../../controllers/carousel_control.dart';
 
 class AppBarHomePage extends StatefulWidget {
   AppBarHomePage({Key? key}) : super(key: key);
@@ -10,9 +12,10 @@ class AppBarHomePage extends StatefulWidget {
 }
 
 class _AppBarHomePageState extends State<AppBarHomePage> {
-  Authen _authen = Authen();
   @override
   Widget build(BuildContext context) {
+    final providerBool = Provider.of<CarouselListener>(context);
+
     return
         //
         /*
@@ -240,12 +243,13 @@ class _AppBarHomePageState extends State<AppBarHomePage> {
                                   color: Colors.black54),
                             ),
                             FlutterSwitch(
-                              value: _authen.brand,
+                              value: providerBool.brandValue,
                               onToggle: (bool _value) {
                                 print(_value);
-                                setState(() {
-                                  _authen.brandmall();
-                                });
+                                providerBool.brandValue = !_value;
+                                // setState(() {
+                                //   _authen.brandmall();
+                                // });
                               },
                               width: 44,
                               height: 16,

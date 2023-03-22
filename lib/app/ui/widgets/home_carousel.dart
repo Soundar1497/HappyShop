@@ -1,7 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:project_1/app/controllers/authentication.dart';
+import 'package:project_1/app/controllers/carousel_control.dart';
 import 'package:project_1/app/ui/themes/colors.dart';
+import 'package:provider/provider.dart';
 
 class CarouselScreen extends StatefulWidget {
   CarouselScreen({Key? key}) : super(key: key);
@@ -144,13 +146,13 @@ List<Widget> imageIndicator(imagesLength, currentIndex) {
 
 class _CarouselScreenState extends State<CarouselScreen> {
   Authen _authen = Authen();
-  List images2 = [
+  List images1 = [
     'assets/carouselImage/carouselImage_3.jpg',
     'assets/carouselImage/carouselImage_4.jpg',
     'assets/carouselImage/carouselImage_5.jpg',
     'assets/carouselImage/carouselImage_6.jpg',
   ];
-  List images1 = [
+  List images2 = [
     'assets/carouselImage/carouselImage_1.jpg',
     'assets/carouselImage/carouselImage_2.jpg',
     'assets/carouselImage/carouselImage_3.jpg',
@@ -164,12 +166,14 @@ class _CarouselScreenState extends State<CarouselScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final providerBool = Provider.of<CarouselListener>(context);
+
     return Stack(children: [
       CarouselSlider(
         carouselController: _controller,
         options: CarouselOptions(
             enlargeStrategy: CenterPageEnlargeStrategy.scale,
-            height: _authen.brand ? 150.0 : 250,
+            height: providerBool.brandValue ? 150.0 : 250,
             autoPlayCurve: Curves.easeInOutQuad,
             autoPlayInterval: Duration(seconds: 5),
             autoPlayAnimationDuration: Duration(seconds: 2),
@@ -180,7 +184,7 @@ class _CarouselScreenState extends State<CarouselScreen> {
                 active = i;
               });
             }),
-        items: _authen.brand
+        items: providerBool.brandValue
             ? images1.map((i) {
                 return Builder(
                   builder: (BuildContext context) {
@@ -233,10 +237,10 @@ class _CarouselScreenState extends State<CarouselScreen> {
         child: Center(
           child: Container(
             height: 15,
-            width: _authen.brand
-                ? 22 * images1.length.toDouble()
-                : 22 * images2.length.toDouble(),
-            margin: _authen.brand
+            width: providerBool.brandValue
+                ? 22 * images2.length.toDouble()
+                : 22 * images1.length.toDouble(),
+            margin: providerBool.brandValue
                 ? const EdgeInsets.only(left: 4, right: 5, top: 120)
                 : const EdgeInsets.only(left: 4, right: 5, top: 220),
             decoration: const BoxDecoration(
@@ -247,7 +251,8 @@ class _CarouselScreenState extends State<CarouselScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: imageIndicator(
-                  _authen.brand ? images1.length : images2.length, active),
+                  providerBool.brandValue ? images2.length : images1.length,
+                  active),
             ),
           ),
         ),

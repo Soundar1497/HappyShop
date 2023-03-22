@@ -4,10 +4,12 @@ import 'package:project_1/app/controllers/authentication.dart';
 import 'package:project_1/app/ui/pages/auth/firstpage.dart';
 import 'package:project_1/app/ui/pages/auth/signin.dart';
 import 'package:project_1/app/ui/pages/auth/signup.dart';
+import 'package:project_1/app/ui/pages/ui_page_list/home/home.dart';
 import 'package:project_1/firebase_options.dart';
 
-import 'app/ui/pages/buyers/product/empty_product_page.dart';
+import 'app/ui/pages/dashboard/dashboard.dart';
 import 'app/ui/pages/splash_Screen/splash_screen.dart';
+import 'app/ui/pages/ui_page_list/product/empty_product_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,6 +33,8 @@ class MyApp extends StatelessWidget {
           '/firstScreen': (context) => const FirstScreen(),
           '/signUp': (context) => const SignUpPage(),
           '/signIn': (context) => const SignIn(),
+          '/dashboard': (context) => const Dashboard(),
+          '/homePage': (context) => const HomePage(),
           '/EmptyProductPage': (context) => const EmptyProductPage(),
         });
   }

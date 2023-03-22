@@ -63,10 +63,21 @@ class _CustomGridViewOneState extends State<CustomGridViewOne> {
         if (data.hasError) {
           print(
               '----------------------------- ${data.error} ------------------------------');
-        } else if (data.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+        } else if (data.connectionState == ConnectionState.none) {
+          return Center(
+            child: Container(
+                width: 30, height: 30, child: CircularProgressIndicator()),
+          );
+        }
+
+        if (data.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: Container(
+                width: 30, height: 30, child: CircularProgressIndicator()),
+          );
         }
         //
+
         var items = data.data as List<CardData>;
 
         //
@@ -228,22 +239,88 @@ class _CustomGridViewOneState extends State<CustomGridViewOne> {
                     child: Stack(
                       children: [
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          width: MediaQuery.of(context).size.width,
-                          height: widget.crossAxisCount == 2
-                              ? 110 / childRatio
-                              : 60 / childRatio,
-                          // color: Colors.red,
-                          child: ClipRect(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            width: MediaQuery.of(context).size.width,
+                            height: widget.crossAxisCount == 2
+                                ? 110 / childRatio
+                                : 60 / childRatio,
+                            // color: Colors.red,
+                            child: ClipRect(
                               child: Image.network(
-                            items[i].img.toString(),
-                            // "",
-                            // items[i].summerCardData,
-                            // items[i].summerOffer.img.toString(),
-                            fit: BoxFit.contain,
-                            alignment: Alignment.center,
-                          )),
-                        ),
+                                items[i].img.toString(),
+                                // "",
+                                // items[i].summerCardData,
+                                // items[i].summerOffer.img.toString(),
+                                fit: BoxFit.contain,
+                                alignment: Alignment.center,
+                                errorBuilder: (context, error, stackTraces) {
+                                  return const Center(
+                                    child: Text(
+                                      'Network Error ! \n Image not loading',
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  );
+                                },
+                                loadingBuilder:
+                                    /*
+                              //         (BuildContext context,
+                              //         Widget child, wasSynchronouslyLoaded) {
+                              //   if (wasSynchronouslyLoaded == true) {
+                              //     return Container(
+                              //         width: 20,
+                              //         height: 20,
+                              //         child: const CircularProgressIndicator());
+                              //   } else {
+                              //     return child;
+                              //   }
+                              // }
+
+                                   */
+
+                                    (BuildContext context, Widget child,
+                                        ImageChunkEvent? loadingProgress) {
+                                  // if (loadingProgress.hashCode == null) {
+                                  //   return const Center(
+                                  //       child: Text('Loading...'));
+                                  // } else if (loadingProgress == null) {
+                                  //   return child;
+                                  // }
+                                  // return const Center(
+                                  //     child: Text('Loading...'));
+                                  if (loadingProgress.hashCode == null) {
+                                    return Center(
+                                        child: Container(
+                                      width: 20,
+                                      height: 20,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 3,
+                                      ),
+                                    ));
+                                  } else if (loadingProgress.hashCode != null &&
+                                      loadingProgress != null) {
+                                    return Center(
+                                        child: Container(
+                                      width: 20,
+                                      height: 20,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 3,
+                                      ),
+                                    ));
+                                  } else if (loadingProgress == null) {
+                                    return child;
+                                  } else {
+                                    return Center(
+                                        child: Container(
+                                      width: 20,
+                                      height: 20,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 3,
+                                      ),
+                                    ));
+                                  }
+                                },
+                              ),
+                            )),
                         Container(
                           width: MediaQuery.of(context).size.width,
                           margin: EdgeInsets.only(
@@ -375,11 +452,51 @@ class _CustomGridViewTwoState extends State<CustomGridViewTwo> {
                               height: 175,
                               // color: Colors.red,
                               child: ClipRect(
-                                  child: Image.network(
-                                items[i].img.toString(),
-                                fit: BoxFit.fill,
-                                alignment: Alignment.center,
-                              )),
+                                  child: Image.network(items[i].img.toString(),
+                                      fit: BoxFit.fill,
+                                      alignment: Alignment.center, errorBuilder:
+                                          (context, error, stackTraces) {
+                                return const Center(
+                                  child: Text(
+                                    'Network Error ! \n Image not loading',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                );
+                              }, loadingBuilder: (BuildContext context,
+                                          Widget child,
+                                          ImageChunkEvent? loadingProgress) {
+                                if (loadingProgress.hashCode == null) {
+                                  return Center(
+                                      child: Container(
+                                    width: 20,
+                                    height: 20,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 3,
+                                    ),
+                                  ));
+                                } else if (loadingProgress.hashCode != null &&
+                                    loadingProgress != null) {
+                                  return Center(
+                                      child: Container(
+                                    width: 20,
+                                    height: 20,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 3,
+                                    ),
+                                  ));
+                                } else if (loadingProgress == null) {
+                                  return child;
+                                } else {
+                                  return Center(
+                                      child: Container(
+                                    width: 20,
+                                    height: 20,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 3,
+                                    ),
+                                  ));
+                                }
+                              })),
                             ),
                           ),
                           items[i].position.toString().contains('true')
@@ -445,65 +562,56 @@ class _CustomGridViewTwoState extends State<CustomGridViewTwo> {
                               style: CustomTextStyle.p4(context),
                             ),
                           ),
-                          Expanded(
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              margin: const EdgeInsets.only(top: 232, left: 10),
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            margin: const EdgeInsets.only(top: 232, left: 10),
 
-                              // color: Colors.yellow,
-                              child: Row(
-                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    items[i].price.toString(),
-                                    style: CustomTextStyle.hl5(context),
-                                  ),
-                                  items[i]
-                                              .old_price
-                                              .toString()
-                                              .contains("null") ||
-                                          items[i]
-                                                  .old_price
-                                                  .toString()
-                                                  .length <=
-                                              0
-                                      ? Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 5),
-                                          child: Text(
-                                            "",
-                                            style: CustomTextStyle.p3(context),
-                                          ),
-                                        )
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 5),
-                                          child: Text(
-                                            items[i].old_price.toString(),
-                                            // items[i].offers.toString(),
-                                            style: CustomTextStyle.p3(context),
-                                          ),
+                            // color: Colors.yellow,
+                            child: Row(
+                              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  items[i].price.toString(),
+                                  style: CustomTextStyle.hl5(context),
+                                ),
+                                items[i]
+                                            .old_price
+                                            .toString()
+                                            .contains("null") ||
+                                        items[i].old_price.toString().length <=
+                                            0
+                                    ? Padding(
+                                        padding: const EdgeInsets.only(left: 5),
+                                        child: Text(
+                                          "",
+                                          style: CustomTextStyle.p3(context),
                                         ),
-                                  items[i].offer.toString().contains("null")
-                                      ? Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 5),
-                                          child: Text(
-                                            "",
-                                            style: CustomTextStyle.p3(context),
-                                          ),
-                                        )
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 5),
-                                          child: Text(
-                                            items[i].offer.toString(),
-                                            // items[i].offers.toString(),
-                                            style: CustomTextStyle.hl2(context),
-                                          ),
+                                      )
+                                    : Padding(
+                                        padding: const EdgeInsets.only(left: 5),
+                                        child: Text(
+                                          items[i].old_price.toString(),
+                                          // items[i].offers.toString(),
+                                          style: CustomTextStyle.p3(context),
                                         ),
-                                ],
-                              ),
+                                      ),
+                                items[i].offer.toString().contains("null")
+                                    ? Padding(
+                                        padding: const EdgeInsets.only(left: 5),
+                                        child: Text(
+                                          "",
+                                          style: CustomTextStyle.p3(context),
+                                        ),
+                                      )
+                                    : Padding(
+                                        padding: const EdgeInsets.only(left: 5),
+                                        child: Text(
+                                          items[i].offer.toString(),
+                                          // items[i].offers.toString(),
+                                          style: CustomTextStyle.hl2(context),
+                                        ),
+                                      ),
+                              ],
                             ),
                           ),
                         ],

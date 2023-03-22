@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
@@ -15,9 +16,14 @@ class Authen extends ControllerMVC {
 
   final AuthenticationModel _auth = AuthenticationModel();
 
+  FirebaseFirestore get fireStore => _auth.fireStore;
+  FirebaseAuth get firebaseAuth => _auth.authenticationAccess;
+
   bool get brand => AuthenticationModel.brand;
 
   void brandmall() => AuthenticationModel.brandmall();
+
+  get userData => _auth.userData();
 
   get authenCurrentState => _auth.authCurrentState;
 
@@ -152,9 +158,13 @@ class Authen extends ControllerMVC {
 
     try {
       await _auth.signOut();
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const FirstScreen()),
+          (route) => true);
 
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => const FirstScreen()));
+      // Navigator.pushReplacement(context,
+      //     MaterialPageRoute(builder: (context) => const FirstScreen()));
     } on FirebaseAuthException catch (e) {
       showDialog(
           context: context,

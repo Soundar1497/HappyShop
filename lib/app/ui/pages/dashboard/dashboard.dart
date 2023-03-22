@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:project_1/app/ui/pages/buyers/home/home.dart';
 
-import '../buyers/account/Account.dart';
-import '../buyers/cart/dart.dart';
-import '../buyers/categories/categories.dart';
+import '../../../controllers/authentication.dart';
+import '../ui_page_list/account/Account.dart';
+import '../ui_page_list/cart/dart.dart';
+import '../ui_page_list/categories/categories.dart';
+import '../ui_page_list/home/home.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -28,6 +29,15 @@ class _DashboardState extends State<Dashboard> {
     setState(() {
       _index = index;
     });
+  }
+
+  Authen _authen = Authen();
+
+  @override
+  void initState() {
+    super.initState();
+    _authen.userData;
+    print(_authen.email.text);
   }
 
   @override
