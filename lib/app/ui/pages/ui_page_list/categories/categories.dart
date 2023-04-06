@@ -1,4 +1,13 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+
+import '../../../../../json/json_controller/category_list.dart';
+import '../../../../controllers/carousel_control.dart';
+import 'Category_items.dart';
 
 class Categories extends StatefulWidget {
   const Categories({Key? key}) : super(key: key);
@@ -8,14 +17,160 @@ class Categories extends StatefulWidget {
 }
 
 class _CategoriesState extends State<Categories> {
+  Future<List<CategoryList>> readCategory() async {
+    print('future start');
+    final data = await rootBundle.loadString('lib/json/category_list.json');
+
+    final dataList = jsonDecode(data) as List<dynamic>;
+    var dat = dataList.length;
+    print("=============== dataList length = $dat ========================");
+    print("========== ${dataList} ===========");
+
+    var nam = <CategoryList>[];
+    dataList.forEach((e) {
+      nam.add(CategoryList.fromJson(e));
+      print(nam);
+    });
+
+    return nam;
+  }
+
+  // Future _pullRefresh() async {
+  //   final providerIndex = Provider.of<CarouselListener>(context);
+  //   print(providerIndex.pageIndex);
+  //
+  //   setState(() {
+  //     providerIndex.pageIndex = 1;
+  //     Navigator.pushReplacementNamed(context, '/dashboard');
+  //   });
+  // }
+
+  @override
+  void initState() {
+    super.initState();
+    readCategory();
+  }
+
+  Duration count = const Duration(days: 5);
+  Timer? countdownTimer;
+
+  void startTimer() {
+    countdownTimer =
+        Timer.periodic(Duration(seconds: 1), (_) => setCountDown());
+  }
+
+  void setCountDown() {
+    final reduceSecondsBy = 1;
+    setState(() {
+      final seconds = count.inSeconds - reduceSecondsBy;
+      if (seconds < 0) {
+        countdownTimer!.cancel();
+      } else {
+        count = Duration(seconds: seconds);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    // String val(int n) => n.toString().padLeft(2, '0');
+    // final day = val(count.inDays);
+    // final hours = val(count.inHours.remainder(24));
+    // final min = val(count.inMinutes.remainder(60));
+    // final sec = val(count.inSeconds.remainder(60));
+
+    final providerIndex = Provider.of<CarouselListener>(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Categories"),
+        backgroundColor: Color.fromRGBO(245, 147, 163, 1.0),
+        title: const Text("All Categories"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                readCategory();
+              },
+              icon: Icon(Icons.search)),
+          IconButton(onPressed: () {}, icon: Icon(Icons.mic_none_outlined))
+        ],
       ),
-      body: const Center(
-        child: Text("Categories Page"),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          print(providerIndex.pageIndex);
+          setState(() {
+            // Navigator.pushReplacementNamed(context, '/dashboard');
+            providerIndex.pageIndex = 1;
+          });
+        },
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Column(
+            children: [
+              FutureBuilder(
+                  future: readCategory(),
+                  builder: (context, AsyncSnapshot<List<CategoryList>> data) {
+                    if (data.hasError) {
+                    } else if (data.connectionState ==
+                        ConnectionState.waiting) {
+                      return CircularProgressIndicator();
+                    }
+                    var item = data.data;
+                    return Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height / 1.65,
+                      child: GridView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                childAspectRatio: .77,
+                                mainAxisSpacing: 15,
+                                crossAxisCount: 4,
+                                crossAxisSpacing: 10),
+                        padding: EdgeInsets.only(
+                            left: 10, right: 10, top: 10, bottom: 10),
+                        scrollDirection: Axis.vertical,
+                        itemCount: item?.length,
+                        itemBuilder: (BuildContext context, i) {
+                          return CategoryItem(
+                            data: "${item?[i].proName.toString()}",
+                            img: "${item?[i].img.toString()}",
+                            onTap: () {
+                              print("${item?[i].proName.toString()} is Tapped");
+                            },
+                          );
+                        },
+                      ),
+                    );
+                  }),
+              Divider(
+                thickness: 1,
+              ),
+              // Container(
+              //   width: MediaQuery.of(context).size.width,
+              //   height: 40,
+              //   margin:
+              //       const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+              //   decoration: BoxDecoration(
+              //       borderRadius: BorderRadius.all(Radius.circular(20)),
+              //       color: Colors.red.shade300),
+              //   child: Row(
+              //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //       children: [
+              //         Text('Big Scale End In : ',
+              //             style: TextStyle(fontSize: 20)),
+              //         Container(
+              //           child: StreamBuilder(
+              //             builder: (context, snapshot) {
+              //               return Text("$day D: $hours H: $min M: $sec S");
+              //             },
+              //           ),
+              //         ),
+              //       ]),
+              // ),
+              // ElevatedButton(
+              //     onPressed: () => startTimer(), child: Text('Start'))
+            ],
+          ),
+        ),
       ),
     );
   }

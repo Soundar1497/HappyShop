@@ -35,4 +35,12 @@ class CarouselListener extends ChangeNotifier {
     _gender = value;
     notifyListeners();
   }
+
+  // Dashboard page index
+  int _pageIndex = 0;
+  int get pageIndex => _pageIndex;
+  set pageIndex(int value) {
+    _pageIndex = value;
+    notifyListeners();
+  }
 }

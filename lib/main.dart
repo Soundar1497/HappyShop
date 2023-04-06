@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:project_1/app/controllers/authentication.dart';
 import 'package:project_1/app/ui/pages/auth/firstpage.dart';
 import 'package:project_1/app/ui/pages/auth/signin.dart';
@@ -7,8 +8,10 @@ import 'package:project_1/app/ui/pages/auth/signup.dart';
 import 'package:project_1/app/ui/pages/ui_page_list/home/home.dart';
 import 'package:project_1/firebase_options.dart';
 
+import 'app/ui/pages/buyers/product/men_footwear/men_footwear.dart';
 import 'app/ui/pages/dashboard/dashboard.dart';
 import 'app/ui/pages/splash_Screen/splash_screen.dart';
+import 'app/ui/pages/ui_page_list/categories/categories.dart';
 import 'app/ui/pages/ui_page_list/product/empty_product_page.dart';
 
 void main() async {
@@ -25,6 +28,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         navigatorKey: _authen.navigatorKey,
@@ -35,7 +42,9 @@ class MyApp extends StatelessWidget {
           '/signIn': (context) => const SignIn(),
           '/dashboard': (context) => const Dashboard(),
           '/homePage': (context) => const HomePage(),
+          '/Categories': (context) => const Categories(),
           '/EmptyProductPage': (context) => const EmptyProductPage(),
+          '/FootwearPuma': (context) => const FootwearPuma(),
         });
   }
 }

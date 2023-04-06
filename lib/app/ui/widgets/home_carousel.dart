@@ -146,13 +146,13 @@ List<Widget> imageIndicator(imagesLength, currentIndex) {
 
 class _CarouselScreenState extends State<CarouselScreen> {
   Authen _authen = Authen();
-  List images1 = [
-    'assets/carouselImage/carouselImage_3.jpg',
-    'assets/carouselImage/carouselImage_4.jpg',
+  List images2 = [
+    'assets/carouselImage/carouselImage_11.jpg',
+    'assets/carouselImage/carouselImage_12.jpg',
     'assets/carouselImage/carouselImage_5.jpg',
     'assets/carouselImage/carouselImage_6.jpg',
   ];
-  List images2 = [
+  List images1 = [
     'assets/carouselImage/carouselImage_1.jpg',
     'assets/carouselImage/carouselImage_2.jpg',
     'assets/carouselImage/carouselImage_3.jpg',
@@ -175,7 +175,7 @@ class _CarouselScreenState extends State<CarouselScreen> {
             enlargeStrategy: CenterPageEnlargeStrategy.scale,
             height: providerBool.brandValue ? 150.0 : 250,
             autoPlayCurve: Curves.easeInOutQuad,
-            autoPlayInterval: Duration(seconds: 5),
+            autoPlayInterval: Duration(seconds: 3),
             autoPlayAnimationDuration: Duration(seconds: 2),
             enlargeCenterPage: true,
             autoPlay: true,
@@ -238,8 +238,8 @@ class _CarouselScreenState extends State<CarouselScreen> {
           child: Container(
             height: 15,
             width: providerBool.brandValue
-                ? 22 * images2.length.toDouble()
-                : 22 * images1.length.toDouble(),
+                ? 22 * images1.length.toDouble()
+                : 22 * images2.length.toDouble(),
             margin: providerBool.brandValue
                 ? const EdgeInsets.only(left: 4, right: 5, top: 120)
                 : const EdgeInsets.only(left: 4, right: 5, top: 220),
@@ -251,7 +251,7 @@ class _CarouselScreenState extends State<CarouselScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: imageIndicator(
-                  providerBool.brandValue ? images2.length : images1.length,
+                  providerBool.brandValue ? images1.length : images2.length,
                   active),
             ),
           ),

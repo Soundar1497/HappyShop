@@ -67,74 +67,80 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(children: [
-        // Background color for splash screen
+    return WillPopScope(
+      onWillPop: () {
+        return Future.value(false);
+      },
+      child: Scaffold(
+        body: Stack(children: [
+          // Background color for splash screen
 
-        Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          decoration: const BoxDecoration(
-              gradient: LinearGradient(
-            colors: [
-              SplashColor.splashColor1,
-              // SplashColor.splashColor2,
-              // SplashColor.splashColor3,
-              // SplashColor.splashColor4,
-              SplashColor.splashColor5,
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          )),
-        ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            decoration: const BoxDecoration(
+                gradient: LinearGradient(
+              colors: [
+                SplashColor.splashColor1,
+                // SplashColor.splashColor2,
+                // SplashColor.splashColor3,
+                // SplashColor.splashColor4,
+                SplashColor.splashColor5,
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            )),
+          ),
 
-        // App Logo with Animation
+          // App Logo with Animation
 
-        RotationTransition(
-          turns: _imageAnimation,
-          child: ScaleTransition(
-            scale: _imageAnimation,
-            child: Center(
-              child: Container(
-                height: 150,
-                // color: Colors.red,
-                child: const ClipRect(
-                  clipBehavior: Clip.antiAlias,
-                  child: Image(
-                      image: AssetImage('assets/icon_launcher_foreground.png')),
+          RotationTransition(
+            turns: _imageAnimation,
+            child: ScaleTransition(
+              scale: _imageAnimation,
+              child: Center(
+                child: Container(
+                  height: 150,
+                  // color: Colors.red,
+                  child: const ClipRect(
+                    clipBehavior: Clip.antiAlias,
+                    child: Image(
+                        image:
+                            AssetImage('assets/icon_launcher_foreground.png')),
+                  ),
                 ),
               ),
             ),
           ),
-        ),
 
-        // App Text with Animation
-        Center(
-          child: Container(
-            margin:
-                EdgeInsets.only(top: MediaQuery.of(context).size.height - 125),
-            // color: Colors.blue,
-            child: DefaultTextStyle(
-              textHeightBehavior:
-                  TextHeightBehavior(applyHeightToFirstAscent: true),
-              style: const TextStyle(
-                fontSize: 25.0,
-                fontWeight: FontWeight.bold,
-                fontStyle: FontStyle.italic,
-              ),
-              child: AnimatedTextKit(
-                isRepeatingAnimation: false,
-                animatedTexts: [
-                  WavyAnimatedText('Happy Shop',
-                      speed: const Duration(milliseconds: 250)),
-                ],
+          // App Text with Animation
+          Center(
+            child: Container(
+              margin: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height - 125),
+              // color: Colors.blue,
+              child: DefaultTextStyle(
+                textHeightBehavior:
+                    TextHeightBehavior(applyHeightToFirstAscent: true),
+                style: const TextStyle(
+                  fontSize: 25.0,
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
+                ),
+                child: AnimatedTextKit(
+                  isRepeatingAnimation: false,
+                  animatedTexts: [
+                    WavyAnimatedText('Happy Shop',
+                        speed: const Duration(milliseconds: 250)),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
 
-        //  logo and text;
-      ]),
+          //  logo and text;
+        ]),
+      ),
     );
   }
 }

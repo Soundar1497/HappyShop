@@ -109,6 +109,74 @@ class _EditProfileState extends State<EditProfile> {
     return verify;
   }
 
+  Future verifyPasswordUpdate() async {
+    bool verify = false;
+    print('verify start and 1 is : $verify');
+    var currentUser = await _authen.firebaseAuth.currentUser?.email;
+    var collectionId = await _authen.fireStore.collection('User').get();
+    var docLength = collectionId.size;
+    int i = 0;
+    // To Change Value in FireStore
+    for (int j = 0; j < docLength; j++) {
+      var docId =
+          await _authen.fireStore.collection('User').doc('user_$j').get();
+      var savedEmail = docId.data();
+
+      print(
+          'current user : $currentUser and saved user : ${savedEmail?['email']}');
+
+      if (currentUser == savedEmail?['email']) {
+        if (_authen.confirmPassword.text.isNotEmpty &&
+            _authen.confirmPassword.text.length > 1) {
+          dynamic userDetail =
+              await _authen.fireStore.collection('User').doc('user_$j');
+          var userPassword = savedEmail?['password'];
+
+          if (userPassword == _authen.confirmPassword.text) {
+            setState(() {
+              verify = true;
+              showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (context) => const Center(
+                        child: CircularProgressIndicator(),
+                      ));
+            });
+          } else {
+            const errorMessage = SnackBar(
+                duration: Duration(milliseconds: 500),
+                margin: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                behavior: SnackBarBehavior.floating,
+                padding: EdgeInsets.all(10),
+                content: Text(
+                  "Password not Matching with Current Password",
+                  style: TextStyle(fontSize: 14),
+                ));
+            return ScaffoldMessenger.of(context).showSnackBar(errorMessage);
+          }
+        } else {
+          const errorMessage = SnackBar(
+              duration: Duration(milliseconds: 500),
+              margin: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+              behavior: SnackBarBehavior.floating,
+              padding: EdgeInsets.all(10),
+              content: Text(
+                "Confirm Password field is Empty",
+                style: TextStyle(fontSize: 14),
+              ));
+          return ScaffoldMessenger.of(context).showSnackBar(errorMessage);
+        }
+        break;
+      }
+
+      i++;
+    }
+
+    print('verify end and 2 is : $verify');
+
+    return verify;
+  }
+
   Future updateDetail(keyValue, value) async {
     String? currentValue;
     String? errorValue;
@@ -166,9 +234,15 @@ class _EditProfileState extends State<EditProfile> {
         print('document data for j value $j : $savedEmail');
         print('current User Email Id : $currentUser');
         print('active document email Id : ${savedEmail?['email']}');
+
         if (currentUser == savedEmail?['email']) {
+          i = j;
+
+          print('iteration of i is : $i');
+
           dynamic userDetail =
-              await _authen.fireStore.collection('User').doc('user_$j');
+              _authen.fireStore.collection('User').doc('user_$i');
+          bool? verifyValue;
 
           if (keyValue == 'email' || keyValue == 'password') {
             if (keyValue != null) {
@@ -191,9 +265,6 @@ class _EditProfileState extends State<EditProfile> {
                           if (data!.isEmpty || data == "") {
                             return "* Password field required";
                           }
-                          // else if (data.length < 6) {
-                          //   return "* Password atleast 6 character";
-                          // }
                           return null;
                         },
                       ),
@@ -207,152 +278,324 @@ class _EditProfileState extends State<EditProfile> {
                             child: const Text("Cancel")),
                         TextButton(
                             onPressed: () {
-                              verifyPassword();
+                              setState(() async {
+                                verifyValue = await verifyPasswordUpdate();
+                                if (verifyValue == true) {
+                                  print(
+                                      "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                                  userDetail.update(
+                                      {'$keyValue': '$value'}).then((_) async {
+                                    //
+                                    switch (keyValue) {
+                                      case 'name':
+                                        {
+                                          cur_name = value;
+                                        }
+                                        break;
+                                      case 'mobile':
+                                        {
+                                          cur_mobile = value;
+                                        }
+                                        break;
+                                      case 'email':
+                                        {
+                                          cur_email = value;
+                                        }
+                                        break;
+                                      case 'password':
+                                        {
+                                          cur_email = value;
+                                        }
+                                        break;
+                                    }
+
+                                    //
+
+                                    if (keyValue == 'email') {
+                                      print(
+                                          ' ========== Entered email editing option ========');
+                                      var user =
+                                          _authen.firebaseAuth.currentUser;
+                                      await user
+                                          ?.updateEmail('$value')
+                                          .then((_) async {
+                                        print(
+                                            'current user email Id "$cur_email" was changed successfully to "$value"');
+                                        return await showDialog(
+                                          context: context,
+                                          barrierDismissible: false,
+                                          builder: (BuildContext context) {
+                                            return Center(
+                                              child: AlertDialog(
+                                                title: const Text(
+                                                  'Email ID Updated',
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                                content: const Padding(
+                                                  padding:
+                                                      EdgeInsets.only(top: 20),
+                                                  child: Text(
+                                                    'Kindly SignUp Again ...',
+                                                  ),
+                                                ),
+                                                actions: [
+                                                  Center(
+                                                    child: TextButton(
+                                                        onPressed: () {
+                                                          _authen
+                                                              .signOut(context);
+                                                        },
+                                                        child: const Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  left: 30,
+                                                                  right: 30),
+                                                          child: Text(
+                                                            "Sign Out",
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: TextStyle(
+                                                                fontSize: 18,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                          ),
+                                                        )),
+                                                  )
+                                                ],
+                                              ),
+                                            );
+                                          },
+                                        );
+                                      }).catchError(
+                                              (err) => print('Failed: $err'));
+                                    }
+
+                                    if (keyValue == 'password') {
+                                      print(
+                                          ' ========== Entered password editing option ========');
+                                      var user =
+                                          _authen.firebaseAuth.currentUser;
+                                      await user
+                                          ?.updatePassword('$value')
+                                          .then((_) {
+                                        print(
+                                            'current user password "$cur_password" was changed successfully to "$value"');
+                                        return showDialog(
+                                          context: context,
+                                          barrierDismissible: false,
+                                          builder: (BuildContext context) {
+                                            return Center(
+                                              child: AlertDialog(
+                                                title: const Text(
+                                                  'Password Changed',
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                                content: const Padding(
+                                                  padding:
+                                                      EdgeInsets.only(top: 20),
+                                                  child: Text(
+                                                    'Kindly SignUp Again ...',
+                                                  ),
+                                                ),
+                                                actions: [
+                                                  Center(
+                                                    child: TextButton(
+                                                        onPressed: () => _authen
+                                                            .signOut(context),
+                                                        child: const Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  left: 30,
+                                                                  right: 30),
+                                                          child: Text(
+                                                            "Sign Out",
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: TextStyle(
+                                                                fontSize: 18,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                          ),
+                                                        )),
+                                                  )
+                                                ],
+                                              ),
+                                            );
+                                          },
+                                        );
+                                      }).catchError(
+                                              (err) => print('Failed: $err'));
+                                    }
+
+                                    //
+
+                                    final successMessage = SnackBar(
+                                        duration: Duration(milliseconds: 500),
+                                        margin: EdgeInsets.symmetric(
+                                            vertical: 15, horizontal: 20),
+                                        behavior: SnackBarBehavior.floating,
+                                        padding: EdgeInsets.all(10),
+                                        content: Text(
+                                          "$successValue",
+                                          style: TextStyle(fontSize: 14),
+                                        ));
+                                    return ScaffoldMessenger.of(context)
+                                        .showSnackBar(successMessage);
+                                  }).catchError(
+                                      (error) => print('Failed: $error'));
+                                }
+                              });
                             },
                             child: const Text("Verify")),
                       ],
                     );
                   });
             }
-            var verifyValue = await verifyPassword();
-            if (verifyValue == true) {
-              print(
-                  "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-              userDetail.update({'$keyValue': '$value'}).then((_) async {
-                //
-                switch (keyValue) {
-                  case 'name':
-                    {
-                      cur_name = value;
-                    }
-                    break;
-                  case 'mobile':
-                    {
-                      cur_mobile = value;
-                    }
-                    break;
-                  case 'email':
-                    {
-                      cur_email = value;
-                    }
-                    break;
-                  case 'password':
-                    {
-                      cur_email = value;
-                    }
-                    break;
-                }
+            // if (verifyValue == true) {
+            //   print(
+            //       "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            //   userDetail.update({'$keyValue': '$value'}).then((_) async {
+            //     //
+            //     switch (keyValue) {
+            //       case 'name':
+            //         {
+            //           cur_name = value;
+            //         }
+            //         break;
+            //       case 'mobile':
+            //         {
+            //           cur_mobile = value;
+            //         }
+            //         break;
+            //       case 'email':
+            //         {
+            //           cur_email = value;
+            //         }
+            //         break;
+            //       case 'password':
+            //         {
+            //           cur_email = value;
+            //         }
+            //         break;
+            //     }
+            //
+            //     //
+            //
+            //     //
+            //
+            //     final successMessage = SnackBar(
+            //         duration: Duration(milliseconds: 500),
+            //         margin: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+            //         behavior: SnackBarBehavior.floating,
+            //         padding: EdgeInsets.all(10),
+            //         content: Text(
+            //           "$successValue",
+            //           style: TextStyle(fontSize: 14),
+            //         ));
+            //     return ScaffoldMessenger.of(context)
+            //         .showSnackBar(successMessage);
+            //   }).catchError((error) => print('Failed: $error'));
+            //
+            //   if (keyValue == 'email') {
+            //     print(' ========== Entered email editing option ========');
+            //     var user = _authen.firebaseAuth.currentUser;
+            //     await user?.updateEmail('$value').then((_) {
+            //       print(
+            //           'current user email Id "$cur_email" was changed successfully to "$value"');
+            //       return showDialog(
+            //         context: context,
+            //         barrierDismissible: false,
+            //         builder: (BuildContext context) {
+            //           return Center(
+            //             child: AlertDialog(
+            //               title: const Text(
+            //                 'Email ID Updated',
+            //                 textAlign: TextAlign.center,
+            //               ),
+            //               content: const Padding(
+            //                 padding: EdgeInsets.only(top: 20),
+            //                 child: Text(
+            //                   'Kindly SignUp Again ...',
+            //                 ),
+            //               ),
+            //               actions: [
+            //                 Center(
+            //                   child: TextButton(
+            //                       onPressed: () => _authen.signOut(context),
+            //                       child: const Padding(
+            //                         padding:
+            //                             EdgeInsets.only(left: 30, right: 30),
+            //                         child: Text(
+            //                           "Sign Out",
+            //                           textAlign: TextAlign.center,
+            //                           style: TextStyle(
+            //                               fontSize: 18,
+            //                               fontWeight: FontWeight.w500),
+            //                         ),
+            //                       )),
+            //                 )
+            //               ],
+            //             ),
+            //           );
+            //         },
+            //       );
+            //     }).catchError((err) => print('Failed: $err'));
+            //   }
+            //
+            //   if (keyValue == 'password') {
+            //     print(' ========== Entered password editing option ========');
+            //     var user = _authen.firebaseAuth.currentUser;
+            //     await user?.updatePassword('$value').then((_) {
+            //       print(
+            //           'current user password "$cur_password" was changed successfully to "$value"');
+            //       return showDialog(
+            //         context: context,
+            //         barrierDismissible: false,
+            //         builder: (BuildContext context) {
+            //           return Center(
+            //             child: AlertDialog(
+            //               title: const Text(
+            //                 'Password Changed',
+            //                 textAlign: TextAlign.center,
+            //               ),
+            //               content: const Padding(
+            //                 padding: EdgeInsets.only(top: 20),
+            //                 child: Text(
+            //                   'Kindly SignUp Again ...',
+            //                 ),
+            //               ),
+            //               actions: [
+            //                 Center(
+            //                   child: TextButton(
+            //                       onPressed: () => _authen.signOut(context),
+            //                       child: const Padding(
+            //                         padding:
+            //                             EdgeInsets.only(left: 30, right: 30),
+            //                         child: Text(
+            //                           "Sign Out",
+            //                           textAlign: TextAlign.center,
+            //                           style: TextStyle(
+            //                               fontSize: 18,
+            //                               fontWeight: FontWeight.w500),
+            //                         ),
+            //                       )),
+            //                 )
+            //               ],
+            //             ),
+            //           );
+            //         },
+            //       );
+            //     }).catchError((err) => print('Failed: $err'));
+            //   }
+            // }
+          }
 
-                //
+          //
+          //
 
-                //
-
-                final successMessage = SnackBar(
-                    duration: Duration(milliseconds: 500),
-                    margin: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                    behavior: SnackBarBehavior.floating,
-                    padding: EdgeInsets.all(10),
-                    content: Text(
-                      "$successValue",
-                      style: TextStyle(fontSize: 14),
-                    ));
-                return ScaffoldMessenger.of(context)
-                    .showSnackBar(successMessage);
-              }).catchError((error) => print('Failed: $error'));
-
-              if (keyValue == 'email') {
-                print(' ========== Entered email editing option ========');
-                var user = _authen.firebaseAuth.currentUser;
-                await user?.updateEmail('$value').then((_) {
-                  print(
-                      'current user email Id "$cur_email" was changed successfully to "$value"');
-                  return showDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    builder: (BuildContext context) {
-                      return Center(
-                        child: AlertDialog(
-                          title: const Text(
-                            'Email ID Updated',
-                            textAlign: TextAlign.center,
-                          ),
-                          content: const Padding(
-                            padding: EdgeInsets.only(top: 20),
-                            child: Text(
-                              'Kindly SignUp Again ...',
-                            ),
-                          ),
-                          actions: [
-                            Center(
-                              child: TextButton(
-                                  onPressed: () => _authen.signOut(context),
-                                  child: const Padding(
-                                    padding:
-                                        EdgeInsets.only(left: 30, right: 30),
-                                    child: Text(
-                                      "Sign Out",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  )),
-                            )
-                          ],
-                        ),
-                      );
-                    },
-                  );
-                }).catchError((err) => print('Failed: $err'));
-              }
-
-              if (keyValue == 'password') {
-                print(' ========== Entered password editing option ========');
-                var user = _authen.firebaseAuth.currentUser;
-                await user?.updatePassword('$value').then((_) {
-                  print(
-                      'current user password "$cur_password" was changed successfully to "$value"');
-                  return showDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    builder: (BuildContext context) {
-                      return Center(
-                        child: AlertDialog(
-                          title: const Text(
-                            'Password Changed',
-                            textAlign: TextAlign.center,
-                          ),
-                          content: const Padding(
-                            padding: EdgeInsets.only(top: 20),
-                            child: Text(
-                              'Kindly SignUp Again ...',
-                            ),
-                          ),
-                          actions: [
-                            Center(
-                              child: TextButton(
-                                  onPressed: () => _authen.signOut(context),
-                                  child: const Padding(
-                                    padding:
-                                        EdgeInsets.only(left: 30, right: 30),
-                                    child: Text(
-                                      "Sign Out",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  )),
-                            )
-                          ],
-                        ),
-                      );
-                    },
-                  );
-                }).catchError((err) => print('Failed: $err'));
-              }
-            }
-          } else {
+          else {
             userDetail.update({'$keyValue': '$value'}).then((_) async {
               //
               switch (keyValue) {

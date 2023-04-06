@@ -26,10 +26,18 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final providerIndex = Provider.of<CarouselListener>(context);
+
     return ChangeNotifierProvider<CarouselListener>(
       create: (context) => CarouselListener(),
       child: RefreshIndicator(
-        onRefresh: _pullRefresh,
+        onRefresh: () async {
+          print(providerIndex.pageIndex);
+          setState(() {
+            // Navigator.pushReplacementNamed(context, '/dashboard');
+            providerIndex.pageIndex = 0;
+          });
+        },
         child: SingleChildScrollView(
           child: Column(children: <Widget>[
             // App Bar

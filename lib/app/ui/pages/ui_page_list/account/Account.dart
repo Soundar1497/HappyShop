@@ -4,7 +4,6 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import '../../../../controllers/authentication.dart';
 import '../../../widgets/account_card.dart';
 import '../../../widgets/circular_icon_button.dart';
-import 'authentest.dart';
 import 'edit_profile.dart';
 
 class Account extends StatefulWidget {
@@ -110,10 +109,10 @@ class _AccountState extends State<Account> {
                   AccountCard(
                     onTapFunction: () {
                       print("Notifications clicked");
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return const AthenTest();
-                      }));
+                      // Navigator.push(context,
+                      //     MaterialPageRoute(builder: (context) {
+                      //   return const AthenTest();
+                      // }));
                     },
                     label: "Notifications",
                     icon: Icons.notifications_outlined,
