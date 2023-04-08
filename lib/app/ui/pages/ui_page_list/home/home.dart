@@ -48,14 +48,35 @@ class _HomePageState extends State<HomePage> {
             //  Cool Summer Offer
             //
             CustomGridViewOne(
+              decoration: const BoxDecoration(
+                backgroundBlendMode: BlendMode.darken,
+                image: DecorationImage(
+                    opacity: 0.1,
+                    image: NetworkImage(
+                        'https://i.pinimg.com/564x/7a/aa/98/7aaa98f219cf5337932f79117fa6c8dc.jpg'),
+                    fit: BoxFit.cover),
+                gradient: LinearGradient(colors: [
+                  Color(0xff7fd2bf),
+                  Color(0xff6ef0c3),
+                ], begin: Alignment.topRight, end: Alignment.bottomLeft),
+              ),
+
+              crossAxisCount: 2,
+              height: 450,
+              // readJsonData: (data) => SummerCardFunction.Function1(data),
+              dataText: 'Special Offer Of Day',
+              cardIndex: 3,
+            ),
+            CustomGridViewTwo(
+              color: Color(0xffffe75a),
+              cardIndex: 0,
+            ),
+
+            CustomGridViewOne(
               crossAxisCount: 2,
               height: 450,
               // readJsonData: (data) => SummerCardFunction.Function1(data),
               dataText: 'Cool Summer Offers',
-              cardIndex: 0,
-            ),
-            CustomGridViewTwo(
-              color: Color(0xffffe75a),
               cardIndex: 0,
             ),
 

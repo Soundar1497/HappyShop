@@ -134,6 +134,8 @@ class _CategoriesState extends State<Categories> {
                             data: "${item?[i].proName.toString()}",
                             img: "${item?[i].img.toString()}",
                             onTap: () {
+                              Navigator.pushNamed(
+                                  context, item![1].link.toString());
                               print("${item?[i].proName.toString()} is Tapped");
                             },
                           );

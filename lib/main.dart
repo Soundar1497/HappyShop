@@ -8,11 +8,11 @@ import 'package:project_1/app/ui/pages/auth/signup.dart';
 import 'package:project_1/app/ui/pages/ui_page_list/home/home.dart';
 import 'package:project_1/firebase_options.dart';
 
-import 'app/ui/pages/buyers/product/men_footwear/men_footwear.dart';
+import 'app/ui/pages/buyers/product_list_page/mobile_case_list/mobile_case_list.dart';
+import 'app/ui/pages/buyers/product_list_page/shoe_list/sports_shoe_list.dart';
 import 'app/ui/pages/dashboard/dashboard.dart';
 import 'app/ui/pages/splash_Screen/splash_screen.dart';
 import 'app/ui/pages/ui_page_list/categories/categories.dart';
-import 'app/ui/pages/ui_page_list/product/empty_product_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,8 +43,8 @@ class MyApp extends StatelessWidget {
           '/dashboard': (context) => const Dashboard(),
           '/homePage': (context) => const HomePage(),
           '/Categories': (context) => const Categories(),
-          '/EmptyProductPage': (context) => const EmptyProductPage(),
-          '/FootwearPuma': (context) => const FootwearPuma(),
+          '/ShortsShoeList': (context) => const SportsShoeList(),
+          '/MobileCaseList': (context) => const MobileCaseList(),
         });
   }
 }

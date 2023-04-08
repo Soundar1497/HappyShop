@@ -2,6 +2,7 @@ class person {
   List<CardData>? summerCardData;
   List<CardData>? topSectionCardData;
   List<CardData>? bestQualityCardData;
+  List<CardData>? specialOfferCardData;
 
   person.fromJson(Map<String, dynamic> json) {
     if (json["summerCardData"] != null) {
@@ -21,6 +22,12 @@ class person {
       bestQualityCardData = <CardData>[];
       (json["bestQualityCardData"] as List).forEach((e) {
         bestQualityCardData!.add(CardData.fromJson(e));
+      });
+    }
+    if (json["specialOfferCardData"] != null) {
+      specialOfferCardData = <CardData>[];
+      (json["specialOfferCardData"] as List).forEach((e) {
+        specialOfferCardData!.add(CardData.fromJson(e));
       });
     }
   }

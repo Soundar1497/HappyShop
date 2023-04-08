@@ -113,11 +113,18 @@ class _SortBySheetState extends State<SortBySheet> {
                                 onChanged: (value) {
                                   print("$value");
                                   setState(() {
-                                    tex1 = value.toString();
+                                    _sortByListener.onRadioChange =
+                                        _sortByControl.sortByData[i];
                                     saveSortData();
                                     _sortByListener.sortByBool = true;
                                     print(_sortByListener.sortByBool);
                                   });
+                                  // setState(() {
+                                  //   tex1 = value.toString();
+                                  //   saveSortData();
+                                  //   _sortByListener.sortByBool = true;
+                                  //   print(_sortByListener.sortByBool);
+                                  // });
                                 })
                           ],
                         ),

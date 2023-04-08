@@ -5,7 +5,7 @@
         "img": "https://images.unsplash.com/photo-1608667508764-33cf0726b13a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cnVubmluZyUyMHNob2V8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
         "p_name": "Sports Shoe",
         "offers": "Min. 50% off",
-        "navigator" : "/FootwearPuma"
+        "navigator" : "/EmptyProductPage"
       },
       {
         "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ_DCwYMvr_IRjhCphACtoqDLfuwS06SFGyXexZA9geA&s",
@@ -76,5 +76,32 @@
           "offers": "New Pairs",
           "navigator" : "/EmptyProductPage"
         }
-      ]
+      ],
+      "specialOfferCardData": [
+        {
+          "img": "https://rukminim1.flixcart.com/image/416/416/l4ln8nk0/cases-covers/back-cover/r/u/n/take-risk-or-lose-chance-printed-mobile-case-aesthetic-phone-original-imagfgt4bgvscujg.jpeg?q=70",
+          "p_name": "Mobile Case",
+          "offers": "BEST SELLER",
+          "navigator" : "/MobileCaseList"
+        },
+        {
+          "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ_DCwYMvr_IRjhCphACtoqDLfuwS06SFGyXexZA9geA&s",
+          "p_name": "Mens Caps",
+          "offers": "Min. 60% off",
+          "navigator" : "/EmptyProductPage"
+        },
+        {
+          "img": "https://fdn2.gsmarena.com/vv/pics/xiaomi/xiaomi-poco-x4-pro-1.jpg",
+          "p_name": "Mobile",
+          "offers": "Min. 12% off",
+          "navigator" : "/EmptyProductPage"
+        },
+        {
+          "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfLntF3L_HNVoJQd81G8-TWMlM1OgMMnBHcaMOpPU2DA&s",
+          "p_name": "Men's Track Pants",
+          "offers": "Min. 50% off",
+          "navigator" : "/EmptyProductPage"
+        }]
     }
+
+

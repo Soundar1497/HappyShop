@@ -44,7 +44,8 @@ class _CustomGridViewOneState extends State<CustomGridViewOne> {
     List card = [
       obj.summerCardData,
       obj.topSectionCardData,
-      obj.bestQualityCardData
+      obj.bestQualityCardData,
+      obj.specialOfferCardData
     ];
 
     // return widget.readJsonData(data);
