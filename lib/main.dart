@@ -8,7 +8,9 @@ import 'package:project_1/app/ui/pages/auth/signup.dart';
 import 'package:project_1/app/ui/pages/ui_page_list/home/home.dart';
 import 'package:project_1/firebase_options.dart';
 
+import 'app/ui/pages/buyers/product_detail_page/mobile_list_detail.dart';
 import 'app/ui/pages/buyers/product_list_page/mobile_case_list/mobile_case_list.dart';
+import 'app/ui/pages/buyers/product_list_page/mobile_list/mobile_list.dart';
 import 'app/ui/pages/buyers/product_list_page/shoe_list/sports_shoe_list.dart';
 import 'app/ui/pages/dashboard/dashboard.dart';
 import 'app/ui/pages/splash_Screen/splash_screen.dart';
@@ -45,6 +47,9 @@ class MyApp extends StatelessWidget {
           '/Categories': (context) => const Categories(),
           '/ShortsShoeList': (context) => const SportsShoeList(),
           '/MobileCaseList': (context) => const MobileCaseList(),
+          '/MobileList': (context) => const MobileList(),
+          '/MobileListDetail': (context) => MobileListDetail(
+              ModalRoute.of(context)?.settings.arguments as List<dynamic>),
         });
   }
 }

@@ -5,6 +5,8 @@ import 'package:project_1/app/controllers/carousel_control.dart';
 import 'package:project_1/app/ui/themes/colors.dart';
 import 'package:provider/provider.dart';
 
+import 'carousel_indicator.dart';
+
 class CarouselScreen extends StatefulWidget {
   CarouselScreen({Key? key}) : super(key: key);
 
@@ -250,7 +252,7 @@ class _CarouselScreenState extends State<CarouselScreen> {
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: imageIndicator(
+              children: carouselIndicator(
                   providerBool.brandValue ? images1.length : images2.length,
                   active),
             ),
@@ -259,24 +261,4 @@ class _CarouselScreenState extends State<CarouselScreen> {
       ),
     ]);
   }
-}
-
-List<Widget> imageIndicator(imagesLength, currentIndex) {
-  return List<Widget>.generate(imagesLength, (index) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 2.5, horizontal: 4),
-      width: currentIndex == index ? 16 : 10,
-      height: currentIndex == index ? 8 : 10,
-      decoration: BoxDecoration(
-        borderRadius: currentIndex == index
-            ? const BorderRadius.all(Radius.circular(5))
-            : null,
-        color: currentIndex == index ? Colors.teal.shade400 : Colors.black54,
-        shape: currentIndex == index ? BoxShape.rectangle : BoxShape.circle,
-      ),
-      child: GestureDetector(
-        onTap: () {},
-      ),
-    );
-  });
 }

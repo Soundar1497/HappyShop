@@ -103,22 +103,27 @@ class _SportsShoeListTileState extends State<SportsShoeListTile> {
                         ratingValue: widget.rating!.toDouble() < 1
                             ? widget.rating!.toDouble()
                             : 1,
+                        size: 16,
                       ),
                       StarRatingIcon(
                         ratingValue:
                             widget.rating! < 2 ? widget.rating! - 1 : 1,
+                        size: 16,
                       ),
                       StarRatingIcon(
                         ratingValue:
                             widget.rating! < 3 ? widget.rating! - 2 : 1,
+                        size: 16,
                       ),
                       StarRatingIcon(
                         ratingValue:
                             widget.rating! < 4 ? widget.rating! - 3 : 1,
+                        size: 16,
                       ),
                       StarRatingIcon(
                         ratingValue:
                             widget.rating! < 5 ? widget.rating! - 4 : 1,
+                        size: 16,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 4),

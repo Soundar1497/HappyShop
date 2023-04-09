@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 class StarRatingIcon extends StatefulWidget {
-  StarRatingIcon({Key? key, required this.ratingValue}) : super(key: key);
+  StarRatingIcon({Key? key, required this.size, required this.ratingValue})
+      : super(key: key);
+
+  double size;
 
   double? ratingValue;
 
@@ -17,13 +20,13 @@ class _StarRatingIconState extends State<StarRatingIcon> {
       clipper: MyClipper(),
       child: Stack(children: [
         Container(
-          height: 16,
-          width: 16,
+          height: widget.size,
+          width: widget.size,
           decoration: BoxDecoration(color: Colors.blue.withOpacity(.2)),
         ),
         Container(
-          height: 16,
-          width: (ratingValue! * 16),
+          height: widget.size,
+          width: (ratingValue! * widget.size),
           // width: (16),
           decoration: const BoxDecoration(color: Colors.green),
         ),

@@ -124,18 +124,23 @@ class _MobileCaseListTileState extends State<MobileCaseListTile> {
 
                       StarRatingIcon(
                         ratingValue: rating < 1 ? rating : 1,
+                        size: 16,
                       ),
                       StarRatingIcon(
                         ratingValue: rating < 2 ? rating - 1 : 1,
+                        size: 16,
                       ),
                       StarRatingIcon(
                         ratingValue: rating < 3 ? rating - 2 : 1,
+                        size: 16,
                       ),
                       StarRatingIcon(
                         ratingValue: rating < 4 ? rating - 3 : 1,
+                        size: 16,
                       ),
                       StarRatingIcon(
                         ratingValue: rating <= 5 ? rating - 4 : 1,
+                        size: 16,
                       ),
 
                       // product review
