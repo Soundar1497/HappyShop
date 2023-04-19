@@ -27,6 +27,25 @@ class AuthenticationModel {
 
   static bool get brand => _brand;
 
+  static int? _userIndex;
+  int? get userIndex => _userIndex;
+  set userIndex(value) => _userIndex = value;
+
+  findUserIndex() async {
+    var currentUser = authenticationAccess.currentUser!.email;
+    var dataBase = fireStore.collection('User');
+    var dataBaseID = await fireStore.collection('User').get();
+    int i = 0;
+    for (i; i < dataBaseID.size; i++) {
+      var dbDoc = await dataBase.doc('user_${i}').get();
+      var dbUser = dbDoc.data();
+      if (dbUser!['email'] == currentUser) {
+        break;
+      }
+    }
+    return i;
+  }
+
   static brandmall() {
     _brand = !_brand;
   }

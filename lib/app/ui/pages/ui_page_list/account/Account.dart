@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 
 import '../../../../controllers/authentication.dart';
+import '../../../../models/geo_locator/geo_locator_model.dart';
+import '../../../../provider/geolocator_provider/geolocator_provider.dart';
 import '../../../widgets/account_card.dart';
 import '../../../widgets/circular_icon_button.dart';
 import 'edit_profile.dart';
@@ -15,10 +16,18 @@ class Account extends StatefulWidget {
 
 class _AccountState extends State<Account> {
   final Authen _authSign = Authen();
+  GeoLocatorProvider _GeoLocatorProvider = GeoLocatorProvider();
+  GeoLocatorModel _GeoLocatorModel = GeoLocatorModel();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      physics: NeverScrollableScrollPhysics(),
       scrollDirection: Axis.vertical,
       child: Center(
         child: Container(
@@ -26,10 +35,10 @@ class _AccountState extends State<Account> {
           width: MediaQuery.of(context).size.height,
           child: Stack(children: [
             ClipPath(
-              clipper: ArcClipper(),
+              clipper: BottomClipper(),
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                height: 460,
+                height: 300,
                 decoration: const BoxDecoration(
                     color: Color.fromRGBO(245, 147, 163, 1.0)
                     // gradient: LinearGradient(colors: [
@@ -86,7 +95,7 @@ class _AccountState extends State<Account> {
               ),
             ),
             Positioned(
-              top: 340,
+              top: 310,
               child: Column(
                 children: [
                   //My Account
@@ -101,7 +110,19 @@ class _AccountState extends State<Account> {
                     },
                     label: "My Account",
                     icon: Icons.account_circle_outlined,
-                    iconSize: 40,
+                    iconSize: 35,
+                  ),
+
+                  //Saved Address
+
+                  AccountCard(
+                    onTapFunction: () {
+                      print("Saved Addresses Clicked");
+                      Navigator.pushNamed(context, "/SavedAddressPage");
+                    },
+                    label: "Saved Addresses",
+                    icon: Icons.add_location_alt,
+                    iconSize: 32,
                   ),
 
                   // Notification
@@ -116,7 +137,7 @@ class _AccountState extends State<Account> {
                     },
                     label: "Notifications",
                     icon: Icons.notifications_outlined,
-                    iconSize: 38,
+                    iconSize: 32,
                   ),
 
                   // Setting
@@ -127,7 +148,7 @@ class _AccountState extends State<Account> {
                     },
                     label: "Settings",
                     icon: Icons.settings_outlined,
-                    iconSize: 38,
+                    iconSize: 32,
                   ),
 
                   // Queries
@@ -138,7 +159,7 @@ class _AccountState extends State<Account> {
                     },
                     label: "Browse FAQs",
                     icon: Icons.help_outline_outlined,
-                    iconSize: 36,
+                    iconSize: 32,
                   ),
 
                   // sign out
@@ -157,5 +178,31 @@ class _AccountState extends State<Account> {
         ),
       ),
     );
+  }
+}
+
+// bottom Clipper
+
+class BottomClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    var w = size.width;
+    var h = size.height;
+    var controlPoint1 = Offset(w * .35, size.height + 50);
+    var controlPoint2 = Offset((w * .75), size.height - 70);
+    Path path = Path()
+      ..lineTo(0, 0)
+      ..lineTo(0, h - 25)
+      ..cubicTo(controlPoint1.dx, controlPoint1.dy, controlPoint2.dx,
+          controlPoint2.dy, w, h - 20)
+      ..lineTo(w, 0)
+      ..close();
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
+    return false;
   }
 }

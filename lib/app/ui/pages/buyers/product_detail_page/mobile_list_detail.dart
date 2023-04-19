@@ -331,11 +331,10 @@ class _MobileListDetailState extends State<MobileListDetail> {
                                               color: Colors.grey[800],
                                               fontSize: 15,
                                               fontWeight: FontWeight.normal)),
-                                      const TextSpan(
+                                      TextSpan(
                                           text: ' EMI options',
                                           style: TextStyle(
-                                              color: Color.fromRGBO(
-                                                  246, 110, 133, 1.0),
+                                              color: Colors.blueAccent,
                                               fontSize: 15,
                                               fontWeight: FontWeight.normal)),
                                       TextSpan(
@@ -358,8 +357,7 @@ class _MobileListDetailState extends State<MobileListDetail> {
                                         'Buy now, pay in EMI up to 12 month with any credit Card Later',
                                     style: TextStyle(
                                         height: 1.2,
-                                        color:
-                                            Color.fromRGBO(246, 110, 133, 1.0),
+                                        color: Colors.blueAccent,
                                         fontSize: 15,
                                         fontWeight: FontWeight.normal),
                                     children: [
@@ -457,12 +455,96 @@ class _MobileListDetailState extends State<MobileListDetail> {
               Positioned(
                   bottom: 0,
                   child: Container(
-                    decoration: const BoxDecoration(
-                        color: Color.fromRGBO(201, 150, 248, 1.0),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
                         borderRadius:
-                            BorderRadius.vertical(top: Radius.circular(20))),
+                            BorderRadius.vertical(top: Radius.circular(20)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black12.withOpacity(.1),
+                            offset: Offset(-1, 0),
+                            spreadRadius: 1,
+                            blurRadius: 1,
+                          )
+                        ]),
                     width: MediaQuery.of(context).size.width,
-                    height: 60,
+                    height: 55,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () {},
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(20)),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.height,
+                                alignment: Alignment.center,
+                                decoration: const BoxDecoration(
+                                  color: Colors.transparent,
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20)),
+                                ),
+                                child: const Text(
+                                  'Add To Cart',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const VerticalDivider(
+                          width: 0,
+                          color: Colors.black12,
+                          thickness: 1,
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.orangeAccent,
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(20)),
+                            ),
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                onTap: () {},
+                                borderRadius: const BorderRadius.only(
+                                    topRight: Radius.circular(20)),
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: MediaQuery.of(context).size.height,
+                                  alignment: Alignment.center,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.transparent,
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(20)),
+                                  ),
+                                  child: const Text(
+                                    'Buy Now',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ))
             ]),
           ),

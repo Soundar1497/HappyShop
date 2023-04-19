@@ -1,12 +1,14 @@
 import 'dart:convert';
 
-import 'package:http/http.dart' as http;
+import 'package:flutter/services.dart';
 
 import '../models/mobile_list_model.dart';
 
 class MobileListApi {
   static Future<List<MobileListModel>> getMobileList() async {
-    print("getMobileList() entered ");
+    print("step 2");
+
+    /*
 
     var uri = Uri.https("real-time-product-search.p.rapidapi.com", "/search",
         {"q": "MOBILE", "country": "IN", "language": "en"});
@@ -18,18 +20,20 @@ class MobileListApi {
       "useQueryString": "true"
     });
 
-    Map data = jsonDecode(response.body) as Map<String, dynamic>;
 
-    // print(data["info"]["products"]);
+     */
 
-    var _temp = data["info"]["products"];
-    print("${_temp[1]} and ------------------ ${_temp.runtimeType}");
+    var data = await rootBundle.loadString('lib/json/mobile_list.json');
 
-    // for (var i in data["info"]) {
-    //   _temp.add(i["products"]);
-    // }
-    print("getMobileList() step return");
+    final dataList = jsonDecode(data) as Map<String, dynamic>;
 
-    return MobileListModel.listFromSnapshot(_temp);
+    var cal = dataList['data'] as List;
+    print("step 3");
+
+    List<MobileListModel> value = MobileListModel.listFromSnapshot(cal);
+
+    print("step 6");
+
+    return value;
   }
 }

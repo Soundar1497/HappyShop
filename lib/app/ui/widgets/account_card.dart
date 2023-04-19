@@ -23,15 +23,18 @@ class _AccountCardState extends State<AccountCard> {
     return Container(
         // padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
         width: MediaQuery.of(context).size.width,
-        height: 90,
+        height: 70,
         child: Card(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          color: const Color.fromRGBO(244, 244, 244, 1),
-          elevation: 1,
+          color: Colors.white,
+          elevation: 2,
           borderOnForeground: false,
           margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: InkWell(
+            // splashColor: Colors.redAccent.withOpacity(.2),
+            // highlightColor: Colors.orangeAccent.withOpacity(.1),
+            borderRadius: BorderRadius.all(Radius.circular(20)),
             onTap: widget.onTapFunction,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

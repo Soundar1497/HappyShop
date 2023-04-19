@@ -6,22 +6,23 @@ class MobileListTile extends StatefulWidget {
   const MobileListTile({
     Key? key,
     required this.productTitle,
-    required this.productDescription,
     required this.productPhotos,
-    required this.productAttributes,
     required this.productRating,
     required this.productReviews,
+    required this.productDescription,
+    required this.productAttributes,
     required this.price,
     required this.shipping,
     required this.storeName,
   }) : super(key: key);
 
   final String productTitle;
-  final String productDescription;
   final List productPhotos;
-  final Map productAttributes;
   final double productRating;
-  final String productReviews;
+  final int productReviews;
+
+  final String productDescription;
+  final Map productAttributes;
   final List price;
   final String shipping;
   final String storeName;
@@ -38,20 +39,16 @@ class _MobileListTileState extends State<MobileListTile> {
   Widget build(BuildContext context) {
     var imgUrl = widget.productPhotos[0];
     var rating = widget.productRating;
-    var review = (widget.productReviews).substring(0, 3);
+    var review = widget.productReviews;
     var sellingPrice = widget.price[0];
     var originalPrice = widget.price[1];
-    var sp = sellingPrice.toString().substring(1, 2) +
-        sellingPrice.toString().substring(4);
-    var op = originalPrice.toString().substring(1, 2) +
-        originalPrice.toString().substring(4);
-    var savingPrice =
-        ((double.parse(op)) - (double.parse(sp))).toStringAsFixed(2);
+    var savingPrice = calculateSaving(sellingPrice, originalPrice);
 
     return Padding(
       padding: EdgeInsets.all(4),
       child: Stack(children: [
         Container(
+          // width: MediaQuery.of(context).size.width,
           height: 200,
           decoration: const BoxDecoration(
               boxShadow: [
@@ -72,6 +69,7 @@ class _MobileListTileState extends State<MobileListTile> {
                   width: 140,
                   height: 180,
                   decoration: const BoxDecoration(
+                      color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(15)),
                       boxShadow: [
                         BoxShadow(
@@ -80,11 +78,12 @@ class _MobileListTileState extends State<MobileListTile> {
                             blurRadius: 1,
                             spreadRadius: 1)
                       ]),
+                  padding: EdgeInsets.all(3),
                   child: ClipRRect(
                     borderRadius: BorderRadius.all(Radius.circular(15)),
                     child: Image.network(
                       imgUrl,
-                      fit: BoxFit.fill,
+                      fit: BoxFit.fitHeight,
                     ),
                   ),
                 ),
@@ -104,7 +103,9 @@ class _MobileListTileState extends State<MobileListTile> {
                             right: 4,
                           ),
                           child: Text(
-                            widget.productTitle,
+                            widget.productTitle.length < 42
+                                ? widget.productTitle
+                                : "${widget.productTitle.substring(0, 42)}...",
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.w500),
@@ -132,23 +133,43 @@ class _MobileListTileState extends State<MobileListTile> {
                               // 5 star icon
 
                               StarRatingIcon(
-                                ratingValue: rating < 1 ? rating : 1,
+                                ratingValue: rating <= 1 && rating > 0
+                                    ? rating
+                                    : rating > 1
+                                        ? 1
+                                        : 0,
                                 size: 16,
                               ),
                               StarRatingIcon(
-                                ratingValue: rating < 2 ? rating - 1 : 1,
+                                ratingValue: rating <= 2 && rating > 1
+                                    ? rating - 1
+                                    : rating > 2
+                                        ? 1
+                                        : 0,
                                 size: 16,
                               ),
                               StarRatingIcon(
-                                ratingValue: rating < 3 ? rating - 2 : 1,
+                                ratingValue: rating <= 3 && rating > 2
+                                    ? rating - 2
+                                    : rating > 3
+                                        ? 1
+                                        : 0,
                                 size: 16,
                               ),
                               StarRatingIcon(
-                                ratingValue: rating < 4 ? rating - 3 : 1,
+                                ratingValue: rating <= 4 && rating > 3
+                                    ? rating - 3
+                                    : rating > 4
+                                        ? 1
+                                        : 0,
                                 size: 16,
                               ),
                               StarRatingIcon(
-                                ratingValue: rating <= 5 ? rating - 4 : 1,
+                                ratingValue: rating <= 5 && rating > 4
+                                    ? rating - 4
+                                    : rating > 5
+                                        ? 1
+                                        : 0,
                                 size: 16,
                               ),
 
@@ -181,21 +202,11 @@ class _MobileListTileState extends State<MobileListTile> {
 
                               Padding(
                                 padding: const EdgeInsets.only(right: 6),
-                                child: Row(
-                                  children: [
-                                    const Text(
-                                      "₹",
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                    Text(
-                                      sellingPrice.toString(),
-                                      style: const TextStyle(
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ],
+                                child: Text(
+                                  sellingPrice,
+                                  style: const TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w500),
                                 ),
                               ),
 
@@ -204,7 +215,7 @@ class _MobileListTileState extends State<MobileListTile> {
                               Padding(
                                 padding: EdgeInsets.only(right: 6),
                                 child: Text(
-                                  originalPrice.toString(),
+                                  originalPrice,
                                   style: const TextStyle(
                                       color: Colors.black54,
                                       decoration: TextDecoration.lineThrough,
@@ -269,4 +280,25 @@ class _MobileListTileState extends State<MobileListTile> {
       ]),
     );
   }
+}
+
+String calculateSaving(sp, op) {
+  //
+  //
+  var val1 = op.toString().substring(1).split(",");
+  var originalPrice = double.parse(val1[0] + val1[1]);
+
+  //
+  //
+
+  var val2 = sp.toString().substring(1).split(",");
+  var sellingPrice = double.parse(val2[0] + val2[1]);
+
+  //
+  //
+
+  var saving = originalPrice - sellingPrice;
+  var savingPrice = saving.toStringAsFixed(0);
+
+  return savingPrice;
 }

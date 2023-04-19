@@ -94,6 +94,7 @@ class _CategoriesState extends State<Categories> {
         ],
       ),
       body: RefreshIndicator(
+        triggerMode: RefreshIndicatorTriggerMode.anywhere,
         onRefresh: () async {
           print(providerIndex.pageIndex);
           setState(() {
@@ -146,30 +147,6 @@ class _CategoriesState extends State<Categories> {
               Divider(
                 thickness: 1,
               ),
-              // Container(
-              //   width: MediaQuery.of(context).size.width,
-              //   height: 40,
-              //   margin:
-              //       const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
-              //   decoration: BoxDecoration(
-              //       borderRadius: BorderRadius.all(Radius.circular(20)),
-              //       color: Colors.red.shade300),
-              //   child: Row(
-              //       mainAxisAlignment: MainAxisAlignment.spaceAround,
-              //       children: [
-              //         Text('Big Scale End In : ',
-              //             style: TextStyle(fontSize: 20)),
-              //         Container(
-              //           child: StreamBuilder(
-              //             builder: (context, snapshot) {
-              //               return Text("$day D: $hours H: $min M: $sec S");
-              //             },
-              //           ),
-              //         ),
-              //       ]),
-              // ),
-              // ElevatedButton(
-              //     onPressed: () => startTimer(), child: Text('Start'))
             ],
           ),
         ),

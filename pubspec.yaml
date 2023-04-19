@@ -52,6 +52,10 @@ dependencies:
   shared_preferences: ^2.0.18
   flutter_custom_clippers: ^2.1.0
   http: ^0.13.5
+  geolocator: ^8.2.0
+  geocoding: ^2.0.4
+
+
 
 
 

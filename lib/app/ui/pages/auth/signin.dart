@@ -201,9 +201,7 @@ class _SignInState extends State<SignIn> {
 
                         onPressed: () {
                           if (_authSign.signInKey.currentState!.validate()) {
-                            if (_terms == true) {
-                              _authSign.signIn(context);
-                            }
+                            _authSign.signIn(context);
                           }
                         },
                         child: const Text(
