@@ -9,32 +9,28 @@ class MobileListTile extends StatefulWidget {
     required this.productPhotos,
     required this.productRating,
     required this.productReviews,
-    required this.productDescription,
-    required this.productAttributes,
     required this.price,
+    required this.productDescription,
     required this.shipping,
     required this.storeName,
+    required this.productAttributes,
   }) : super(key: key);
 
   final String productTitle;
   final List productPhotos;
   final double productRating;
   final int productReviews;
-
-  final String productDescription;
-  final Map productAttributes;
   final List price;
+  final String productDescription;
   final String shipping;
   final String storeName;
+  final Map productAttributes;
 
   @override
   State<MobileListTile> createState() => _MobileListTileState();
 }
 
 class _MobileListTileState extends State<MobileListTile> {
-  String text1 =
-      "Reebok Men's Energy Runner LP Nacho/Conavy/None Running Shoes";
-
   @override
   Widget build(BuildContext context) {
     var imgUrl = widget.productPhotos[0];
@@ -269,9 +265,9 @@ class _MobileListTileState extends State<MobileListTile> {
                   originalPrice,
                   savingPrice,
                   widget.productDescription,
-                  widget.productAttributes,
                   widget.shipping,
                   widget.storeName,
+                  widget.productAttributes,
                 ]);
               },
             ),

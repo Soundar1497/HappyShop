@@ -95,7 +95,7 @@ class _CustomFilterBarState extends State<CustomFilterBar> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 4,
             ),
             Center(
@@ -112,7 +112,7 @@ class _CustomFilterBarState extends State<CustomFilterBar> {
                     color: _filterListener.filterBool
                         ? Colors.blueAccent.withOpacity(.1)
                         : Colors.black12.withOpacity(.05),
-                    borderRadius: BorderRadius.horizontal(
+                    borderRadius: const BorderRadius.horizontal(
                       left: Radius.circular(20),
                       right: Radius.circular(20),
                     )),
@@ -127,8 +127,8 @@ class _CustomFilterBarState extends State<CustomFilterBar> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 5),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 5),
                           child: Text(
                             "Filter",
                             style: TextStyle(fontSize: 13),
@@ -137,7 +137,7 @@ class _CustomFilterBarState extends State<CustomFilterBar> {
                         Center(
                           child: Container(
                             // color: Colors.red,
-                            child: Icon(
+                            child: const Icon(
                               Icons.keyboard_arrow_down_outlined,
                               size: 30,
                               weight: 10,
@@ -150,7 +150,7 @@ class _CustomFilterBarState extends State<CustomFilterBar> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 4,
             ),
             Center(
@@ -167,7 +167,7 @@ class _CustomFilterBarState extends State<CustomFilterBar> {
                     color: _filterListener.brandBool
                         ? Colors.blueAccent.withOpacity(.1)
                         : Colors.black12.withOpacity(.05),
-                    borderRadius: BorderRadius.horizontal(
+                    borderRadius: const BorderRadius.horizontal(
                       left: Radius.circular(20),
                       right: Radius.circular(20),
                     )),
@@ -182,8 +182,8 @@ class _CustomFilterBarState extends State<CustomFilterBar> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 5),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 5),
                           child: Text(
                             "Brand",
                             style: TextStyle(fontSize: 13),
@@ -192,7 +192,7 @@ class _CustomFilterBarState extends State<CustomFilterBar> {
                         Center(
                           child: Container(
                             // color: Colors.red,
-                            child: Icon(
+                            child: const Icon(
                               Icons.keyboard_arrow_down_outlined,
                               size: 30,
                               weight: 10,
@@ -205,7 +205,7 @@ class _CustomFilterBarState extends State<CustomFilterBar> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 4,
             ),
           ],

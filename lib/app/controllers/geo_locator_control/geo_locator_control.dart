@@ -2,10 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:project_1/app/ui/pages/dashboard/dashboard.dart';
 
 import '../../models/geo_locator/geo_locator_model.dart';
+import '../carousel_control.dart';
 
 class GeoLocatorControl extends ControllerMVC {
+  // var provider = Provider.of<CarouselListener>(context);
   factory GeoLocatorControl() => _this ??= GeoLocatorControl._();
   static GeoLocatorControl? _this;
   GeoLocatorControl._();
@@ -50,7 +53,7 @@ class GeoLocatorControl extends ControllerMVC {
   get addressKey => _geoModel.addressKey;
   get editAddressKey => _geoModel.editAddressKey;
 
-  Future addAddress(context) async {
+  Future addAddress(context, bool popBool, CarouselListener provider) async {
     showDialog(
         context: context,
         builder: (context) {
@@ -62,7 +65,25 @@ class GeoLocatorControl extends ControllerMVC {
       var mas = await _geoModel.addAddress();
       if (mas.contains('done')) {
         debugPrint('Address Add Successfully');
-        Navigator.popUntil(context, ModalRoute.withName('/SavedAddressPage'));
+        print('popBool : $popBool');
+        if (popBool == true) {
+          Navigator.popUntil(context, ModalRoute.withName('/SavedAddressPage'));
+        } else {
+          // Navigator.pushAndRemoveUntil(
+          //     context,
+          //     ModalRoute.withName('/SavedAddressPage') as Route<Object?>,
+          //     (route) => false);
+          setState(() {
+            provider.pageIndex = 2;
+          });
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Dashboard(
+                        valueIndex: 2,
+                      )),
+              (Route route) => false);
+        }
       }
     } catch (e) {
       debugPrint(e.toString());
@@ -89,7 +110,8 @@ class GeoLocatorControl extends ControllerMVC {
     await _geoModel.deleteProduct(doc);
   }
 
-  Future editAddress(context, newValue, oldValue, key, doc) async {
+  Future editAddress(context, newValue, oldValue, key, doc, bool popBool,
+      CarouselListener provider) async {
     showDialog(
         context: context,
         builder: (context) {
@@ -99,7 +121,26 @@ class GeoLocatorControl extends ControllerMVC {
         });
     try {
       var mas = await _geoModel.editAddress(key, newValue, doc);
-      Navigator.popUntil(context, ModalRoute.withName('/SavedAddressPage'));
+      //
+
+      // Navigator.popUntil(context, ModalRoute.withName('/SavedAddressPage'));
+      //
+      //
+      //
+      if (popBool == true) {
+        Navigator.popUntil(context, ModalRoute.withName('/SavedAddressPage'));
+      } else {
+        setState(() {
+          provider.pageIndex = 2;
+        });
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Dashboard(
+                      valueIndex: 2,
+                    )),
+            (Route route) => false);
+      }
     } catch (e) {
       debugPrint(e.toString());
     }

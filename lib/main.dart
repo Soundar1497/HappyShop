@@ -18,6 +18,7 @@ import 'app/ui/pages/dashboard/dashboard.dart';
 import 'app/ui/pages/splash_Screen/splash_screen.dart';
 import 'app/ui/pages/ui_page_list/account/add_delivery_address.dart';
 import 'app/ui/pages/ui_page_list/account/saved_address_page.dart';
+import 'app/ui/pages/ui_page_list/cart/cart.dart';
 import 'app/ui/pages/ui_page_list/categories/categories.dart';
 
 void main() async {
@@ -48,11 +49,14 @@ class MyApp extends StatelessWidget {
             '/firstScreen': (context) => const FirstScreen(),
             '/signUp': (context) => const SignUpPage(),
             '/signIn': (context) => const SignIn(),
-            '/dashboard': (context) => const Dashboard(),
+            '/dashboard': (context) => Dashboard(),
+            '/cart': (context) => const Cart(),
             '/homePage': (context) => const HomePage(),
             '/Categories': (context) => const Categories(),
             '/SavedAddressPage': (context) => const SavedAddressPage(),
-            '/AddDeliveryAddress': (context) => const AddDeliveryAddress(),
+            '/AddDeliveryAddress': (context) => AddDeliveryAddress(
+                argument: ModalRoute.of(context)?.settings.arguments
+                    as List<dynamic>),
             '/ShortsShoeList': (context) => const SportsShoeList(),
             '/MobileCaseList': (context) => const MobileCaseList(),
             '/MobileList': (context) => const MobileList(),

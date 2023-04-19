@@ -59,7 +59,8 @@ class _SavedAddressPageState extends State<SavedAddressPage> {
                 // highlightColor: Colors.orangeAccent.withOpacity(.1),
                 onTap: () {
                   setState(() {
-                    Navigator.pushNamed(context, "/AddDeliveryAddress");
+                    Navigator.pushNamed(context, "/AddDeliveryAddress",
+                        arguments: [true]);
                   });
                 },
                 child: Container(
@@ -180,7 +181,7 @@ class _SavedAddressPageState extends State<SavedAddressPage> {
                                                       ),
                                                     ),
                                                   ),
-                                                  list['addressType'] != null
+                                                  list['addressType'] != "null"
                                                       ? Padding(
                                                           padding:
                                                               const EdgeInsets
@@ -246,6 +247,9 @@ class _SavedAddressPageState extends State<SavedAddressPage> {
                                                           builder: (context) =>
                                                               AddDeliveryAddress(
                                                                 doc: list,
+                                                                argument: const [
+                                                                  true
+                                                                ],
                                                               )));
                                                 }
                                               },

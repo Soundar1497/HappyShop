@@ -1,12 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:provider/provider.dart';
 
+import '../../../../controllers/carousel_control.dart';
 import '../../../../controllers/geo_locator_control/geo_locator_control.dart';
 import '../../../widgets/add_delivery_address/address_TextField.dart';
 
 class AddDeliveryAddress extends StatefulWidget {
-  const AddDeliveryAddress({Key? key, this.doc}) : super(key: key);
+  AddDeliveryAddress({
+    Key? key,
+    this.doc,
+    this.argument,
+  }) : super(key: key);
+  List<dynamic>? argument;
   final QueryDocumentSnapshot<Object?>? doc;
   @override
   State<AddDeliveryAddress> createState() => _AddDeliveryAddressState();
@@ -67,7 +74,7 @@ class _AddDeliveryAddressState extends State<AddDeliveryAddress> {
   bool _home = false;
   bool _work = false;
 
-  void editorValidation(doc) {
+  void editorValidation(doc, bool popBool, provider) {
     if (_geoLocatorControl.deliveryName.text == _savedName &&
         _geoLocatorControl.deliveryMobileNo.text == _savedMobile &&
         _geoLocatorControl.deliveryPinCode.text == _savedPincode &&
@@ -79,17 +86,20 @@ class _AddDeliveryAddressState extends State<AddDeliveryAddress> {
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text("Address Not Changed")));
     } else {
-      check(_geoLocatorControl.deliveryName.text, _savedName, 'deli_name', doc);
+      check(_geoLocatorControl.deliveryName.text, _savedName, 'deli_name', doc,
+          popBool, provider);
       check(_geoLocatorControl.deliveryMobileNo.text, _savedName, 'deli_mobile',
-          doc);
+          doc, popBool, provider);
       check(_geoLocatorControl.deliveryPinCode.text, _savedName, 'deli_pincode',
-          doc);
-      check(
-          _geoLocatorControl.deliveryState.text, _savedName, 'deli_state', doc);
-      check(_geoLocatorControl.deliveryCity.text, _savedName, 'deli_city', doc);
+          doc, popBool, provider);
+      check(_geoLocatorControl.deliveryState.text, _savedName, 'deli_state',
+          doc, popBool, provider);
+      check(_geoLocatorControl.deliveryCity.text, _savedName, 'deli_city', doc,
+          popBool, provider);
       check(_geoLocatorControl.deliveryStreet.text, _savedName, 'deli_street',
-          doc);
-      check(_geoLocatorControl.deliveryArea.text, _savedName, 'deli_area', doc);
+          doc, popBool, provider);
+      check(_geoLocatorControl.deliveryArea.text, _savedName, 'deli_area', doc,
+          popBool, provider);
 
       String? addressType;
       if (_geoLocatorControl.addressTypeWork == false &&
@@ -100,13 +110,14 @@ class _AddDeliveryAddressState extends State<AddDeliveryAddress> {
       } else {
         addressType = "work";
       }
-      check(addressType, _addressType, 'addressType', doc);
+      check(addressType, _addressType, 'addressType', doc, popBool, provider);
     }
   }
 
-  void check(newValue, savedValue, key, doc) {
+  void check(newValue, savedValue, key, doc, bool popBool, provider) {
     if (newValue != savedValue) {
-      _geoLocatorControl.editAddress(context, newValue, savedValue, key, doc);
+      _geoLocatorControl.editAddress(
+          context, newValue, savedValue, key, doc, popBool, provider);
     }
   }
 
@@ -164,6 +175,12 @@ class _AddDeliveryAddressState extends State<AddDeliveryAddress> {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<CarouselListener>(context);
+
+    bool popBool = widget.argument![0];
+
+    print('popBool : $popBool');
+
     var key = widget.doc != null
         ? _geoLocatorControl.addressKey
         : _geoLocatorControl.editAddressKey;
@@ -461,9 +478,10 @@ class _AddDeliveryAddressState extends State<AddDeliveryAddress> {
                       if (key.currentState!.validate()) {
                         if (widget.doc != null) {
                           print("doc present");
-                          editorValidation(widget.doc);
+                          editorValidation(widget.doc, popBool, provider);
                         } else {
-                          _geoLocatorControl.addAddress(context);
+                          _geoLocatorControl.addAddress(
+                              context, popBool, provider);
                         }
                       }
                       // _geoLocatorControl.addAddress(context);

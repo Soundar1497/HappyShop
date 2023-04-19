@@ -107,7 +107,7 @@ class Authen extends ControllerMVC {
 
       if (messSingIn.contains('success')) {
         Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => const Dashboard()),
+            MaterialPageRoute(builder: (context) => Dashboard()),
             (Route route) => false);
       }
     } on FirebaseAuthException catch (e) {
@@ -181,7 +181,7 @@ class Authen extends ControllerMVC {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const Dashboard()));
+                                      builder: (context) => Dashboard()));
                               // Navigator.pop(context);
                               // Navigator.of(context).popUntil(
                               //         (route) => );

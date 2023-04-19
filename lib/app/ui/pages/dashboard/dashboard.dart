@@ -11,7 +11,9 @@ import '../ui_page_list/categories/categories.dart';
 import '../ui_page_list/home/home.dart';
 
 class Dashboard extends StatefulWidget {
-  const Dashboard({Key? key}) : super(key: key);
+  Dashboard({Key? key, this.valueIndex}) : super(key: key);
+
+  int? valueIndex;
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -31,7 +33,7 @@ class _DashboardState extends State<Dashboard> {
     const Account(),
   ];
 
-  void value(index) {
+  void value(int index) {
     setState(() {
       _listener.pageIndex = index;
     });
@@ -57,6 +59,10 @@ class _DashboardState extends State<Dashboard> {
     _authen.userData;
     _sortByControl.getSortByData;
     print(_authen.email.text);
+
+    if (widget.valueIndex != null) {
+      value(widget.valueIndex!);
+    }
   }
 
   var ctime;

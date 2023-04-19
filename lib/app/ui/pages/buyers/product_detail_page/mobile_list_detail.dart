@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../widgets/carousel_indicator.dart';
 import '../../../widgets/star_rating_icon/star_rating_icon.dart';
@@ -37,35 +38,18 @@ class _MobileListDetailState extends State<MobileListDetail> {
     String title = widget.arguments![0];
     List imgUrl = widget.arguments![1];
     double rating = widget.arguments![2];
-    String review = widget.arguments![3];
+    int review = widget.arguments![3];
     String sellingPrice = widget.arguments![4];
     String originalPrice = widget.arguments![5];
     String savingPrice = widget.arguments![6];
     String description = widget.arguments![7];
-    Map attributes = widget.arguments![8];
-    String shipping = widget.arguments![9];
-    String storeName = widget.arguments![10];
-
-    // print(widget.arguments![0]);
-    // print(widget.arguments![1]);
-    // print(widget.arguments![2]);
-    // print(widget.arguments![3]);
-    // print(widget.arguments![4]);
-    // print(widget.arguments![5]);
-    // print(widget.arguments![6]);
-    // print(widget.arguments![7]);
-    // print(widget.arguments![8]);
-    // print(widget.arguments![9]);
-
-    print(
-        "-------------------------------------------------------------------");
-
-    imgUrl.forEach((e) {
-      print("-------- $e ----------------");
-    });
+    String shipping = widget.arguments![8];
+    String storeName = widget.arguments![9];
+    Map attributes = widget.arguments![10];
 
     if (mounted) {
       return RefreshIndicator(
+        triggerMode: RefreshIndicatorTriggerMode.anywhere,
         onRefresh: () async {
           setState(() {
             Navigator.pushReplacementNamed(context, '/MobileListDetail',
@@ -78,8 +62,9 @@ class _MobileListDetailState extends State<MobileListDetail> {
                   originalPrice,
                   savingPrice,
                   description,
-                  attributes,
                   shipping,
+                  storeName,
+                  attributes,
                 ]);
           });
         },
@@ -109,7 +94,7 @@ class _MobileListDetailState extends State<MobileListDetail> {
                     CarouselSlider(
                         carouselController: _controller,
                         options: CarouselOptions(
-                            viewportFraction: .8,
+                            viewportFraction: .6,
                             enlargeStrategy: CenterPageEnlargeStrategy.scale,
                             initialPage: 0,
                             enableInfiniteScroll: false,
@@ -129,26 +114,31 @@ class _MobileListDetailState extends State<MobileListDetail> {
                           return Builder(
                             builder: (BuildContext context) {
                               return Container(
-                                  width: MediaQuery.of(context).size.width - 50,
+                                  width:
+                                      MediaQuery.of(context).size.width - 165,
                                   margin: const EdgeInsets.symmetric(
                                     vertical: 10,
                                   ),
                                   decoration: const BoxDecoration(
                                       borderRadius:
-                                          BorderRadius.all(Radius.circular(15)),
+                                          BorderRadius.all(Radius.circular(30)),
                                       boxShadow: [
                                         BoxShadow(
-                                            color: Colors.black26,
+                                            color: Colors.black12,
                                             offset: Offset(.5, .5),
-                                            blurRadius: 1,
+                                            blurRadius: 2,
                                             spreadRadius: 1)
                                       ]),
                                   child: Material(
                                     borderRadius: const BorderRadius.all(
-                                        Radius.circular(15)),
+                                        Radius.circular(30)),
                                     child: GestureDetector(
-                                        child: Image.network(i,
-                                            fit: BoxFit.contain)),
+                                        child: ClipRRect(
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(30)),
+                                      child:
+                                          Image.network(i, fit: BoxFit.contain),
+                                    )),
                                   ));
                             },
                           );
@@ -158,7 +148,7 @@ class _MobileListDetailState extends State<MobileListDetail> {
                       child: Center(
                         child: Container(
                           height: 15,
-                          width: 22 * imgUrl.length.toDouble(),
+                          width: 20 * imgUrl.length.toDouble(),
                           margin: const EdgeInsets.only(
                               left: 4, right: 5, top: 245),
                           decoration: const BoxDecoration(
@@ -167,7 +157,7 @@ class _MobileListDetailState extends State<MobileListDetail> {
                             shape: BoxShape.rectangle,
                           ),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: carouselIndicator(imgUrl.length, active),
                           ),
                         ),
@@ -191,11 +181,15 @@ class _MobileListDetailState extends State<MobileListDetail> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  "Visit the $storeName",
-                                  style: const TextStyle(
-                                    color: Color.fromRGBO(246, 110, 133, 1.0),
-                                    fontSize: 14,
+                                Container(
+                                  width: 185,
+                                  child: Text(
+                                    "Visit the $storeName",
+                                    softWrap: true,
+                                    style: const TextStyle(
+                                      color: Color.fromRGBO(246, 110, 133, 1.0),
+                                      fontSize: 12,
+                                    ),
                                   ),
                                 ),
 
@@ -217,24 +211,44 @@ class _MobileListDetailState extends State<MobileListDetail> {
                                     // 5 star icon
 
                                     StarRatingIcon(
-                                      ratingValue: rating < 1 ? rating : 1,
-                                      size: 12,
+                                      ratingValue: rating <= 1 && rating > 0
+                                          ? rating
+                                          : rating > 1
+                                              ? 1
+                                              : 0,
+                                      size: 15,
                                     ),
                                     StarRatingIcon(
-                                      ratingValue: rating < 2 ? rating - 1 : 1,
-                                      size: 12,
+                                      ratingValue: rating <= 2 && rating > 1
+                                          ? rating - 1
+                                          : rating > 2
+                                              ? 1
+                                              : 0,
+                                      size: 15,
                                     ),
                                     StarRatingIcon(
-                                      ratingValue: rating < 3 ? rating - 2 : 1,
-                                      size: 12,
+                                      ratingValue: rating <= 3 && rating > 2
+                                          ? rating - 2
+                                          : rating > 3
+                                              ? 1
+                                              : 0,
+                                      size: 15,
                                     ),
                                     StarRatingIcon(
-                                      ratingValue: rating < 4 ? rating - 3 : 1,
-                                      size: 12,
+                                      ratingValue: rating <= 4 && rating > 3
+                                          ? rating - 3
+                                          : rating > 4
+                                              ? 1
+                                              : 0,
+                                      size: 15,
                                     ),
                                     StarRatingIcon(
-                                      ratingValue: rating <= 5 ? rating - 4 : 1,
-                                      size: 12,
+                                      ratingValue: rating <= 5 && rating > 4
+                                          ? rating - 4
+                                          : rating > 5
+                                              ? 1
+                                              : 0,
+                                      size: 15,
                                     ),
 
                                     // product review
@@ -262,6 +276,19 @@ class _MobileListDetailState extends State<MobileListDetail> {
                                 ),
                                 style: TextStyle(
                                     color: Colors.grey[800],
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                            ),
+
+                            // delivery detail
+
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 4),
+                              child: Text(
+                                shipping,
+                                style: TextStyle(
+                                    color: Colors.grey[600],
                                     fontSize: 16,
                                     fontWeight: FontWeight.normal),
                               ),
@@ -331,7 +358,7 @@ class _MobileListDetailState extends State<MobileListDetail> {
                                               color: Colors.grey[800],
                                               fontSize: 15,
                                               fontWeight: FontWeight.normal)),
-                                      TextSpan(
+                                      const TextSpan(
                                           text: ' EMI options',
                                           style: TextStyle(
                                               color: Colors.blueAccent,
@@ -352,15 +379,15 @@ class _MobileListDetailState extends State<MobileListDetail> {
                               child: RichText(
                                 softWrap: true,
                                 textScaleFactor: 1,
-                                text: const TextSpan(
+                                text: TextSpan(
                                     text:
                                         'Buy now, pay in EMI up to 12 month with any credit Card Later',
                                     style: TextStyle(
                                         height: 1.2,
-                                        color: Colors.blueAccent,
+                                        color: Colors.grey[800],
                                         fontSize: 15,
                                         fontWeight: FontWeight.normal),
-                                    children: [
+                                    children: const [
                                       TextSpan(
                                           text:
                                               '\nActivate & get Welcome reward of',
@@ -401,7 +428,7 @@ class _MobileListDetailState extends State<MobileListDetail> {
                               child: Text(
                                 "Highlights",
                                 style: TextStyle(
-                                    fontSize: 17, fontWeight: FontWeight.w500),
+                                    fontSize: 20, fontWeight: FontWeight.w500),
                               ),
                             ),
 
@@ -410,11 +437,11 @@ class _MobileListDetailState extends State<MobileListDetail> {
                             Text(
                               "${" " * 6}$description",
                               textAlign: TextAlign.left,
-                              style: const TextStyle(
-                                  height: 1.3,
-                                  fontSize: 15,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w400),
+                              style: TextStyle(
+                                height: 1.3,
+                                fontSize: 18,
+                                color: Colors.black.withOpacity(.7),
+                              ),
                             ),
 
                             //size Space
@@ -426,11 +453,11 @@ class _MobileListDetailState extends State<MobileListDetail> {
                             // Other Details text
                             const Padding(
                               padding: EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 8),
+                                  vertical: 12, horizontal: 8),
                               child: Text(
                                 "Other Details",
                                 style: TextStyle(
-                                    fontSize: 17, fontWeight: FontWeight.w500),
+                                    fontSize: 20, fontWeight: FontWeight.w500),
                               ),
                             ),
 
@@ -586,6 +613,20 @@ Widget createTable(Map data) {
   });
   return Table(columnWidths: const {
     0: FractionColumnWidth(.4),
-    1: FractionColumnWidth(.4),
+    1: FractionColumnWidth(.5),
   }, children: rows);
+}
+
+class CartStorage {
+  List cartData = [];
+
+  Future getData() async {
+    var perf = await SharedPreferences.getInstance();
+    perf.getStringList('argument');
+  }
+
+  Future setData(arg) async {
+    var perf = await SharedPreferences.getInstance();
+    perf.setStringList('argument', arg);
+  }
 }

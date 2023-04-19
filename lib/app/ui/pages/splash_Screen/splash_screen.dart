@@ -45,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen>
                 stream: _authen.authenCurrentState,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    return const Dashboard();
+                    return Dashboard();
                   } else {
                     return const FirstScreen();
                   }

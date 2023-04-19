@@ -5,13 +5,10 @@ class MobileListModel {
     required this.productRating,
     required this.productReviews,
     required this.priceList,
-
-    // this.productDescription,
-    // this.productAttributes,
-    // this.sellingPrice,
-    // this.originalPrice,
-    // this.shipping,
-    // this.storeName,
+    required this.productDescription,
+    required this.shipping,
+    required this.storeName,
+    required this.productAttributes,
   });
 
   String productTitle;
@@ -19,14 +16,10 @@ class MobileListModel {
   double productRating;
   int productReviews;
   List priceList;
-
-  // final String? productDescription;
-  // final Map? productAttributes;
-
-  // final String? sellingPrice;
-  // final String? originalPrice;
-  // final String? shipping;
-  // final String? storeName;
+  String productDescription;
+  String shipping;
+  String storeName;
+  Map productAttributes;
 
   factory MobileListModel.formJson(Map<String, dynamic> json) {
     print("step 11");
@@ -71,11 +64,10 @@ class MobileListModel {
       productRating: rating!.toDouble(),
       productReviews: (json["product_num_reviews"]) as int,
       priceList: priceList,
-
-      // productDescription: json["product_description"] as String,
-      // productAttributes: json["product_attributes"] as Map<String, dynamic>,
-      // shipping: json["offer"]["shipping"] as String,
-      // storeName: json["offer"]["store_name"] as String,
+      productDescription: json["product_description"] as String,
+      shipping: json["offer"]["shipping"] as String,
+      storeName: json["offer"]["store_name"] as String,
+      productAttributes: json["product_attributes"] as Map<String, dynamic>,
     );
   }
 

@@ -158,10 +158,12 @@ class _MobileListState extends State<MobileList> {
                                           price: item1[i].priceList,
                                           productReviews:
                                               item1[i].productReviews,
-                                          productDescription: "Description",
-                                          productAttributes: {"1": "a"},
-                                          shipping: 'tomorrow',
-                                          storeName: 'flipkart',
+                                          productDescription:
+                                              item1[i].productDescription,
+                                          productAttributes:
+                                              item1[i].productAttributes,
+                                          shipping: item1[i].shipping,
+                                          storeName: item1[i].storeName,
                                         );
                                       },
                                     ),

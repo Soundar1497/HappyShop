@@ -4,7 +4,7 @@ List<Widget> carouselIndicator(imagesLength, currentIndex) {
   return List<Widget>.generate(imagesLength, (index) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 2.5, horizontal: 4),
-      width: currentIndex == index ? 16 : 10,
+      width: currentIndex == index ? 12 : 10,
       height: currentIndex == index ? 8 : 10,
       decoration: BoxDecoration(
         borderRadius: currentIndex == index
