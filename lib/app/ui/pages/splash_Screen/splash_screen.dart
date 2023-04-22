@@ -106,7 +106,7 @@ class _SplashScreenState extends State<SplashScreen>
                     clipBehavior: Clip.antiAlias,
                     child: Image(
                         image:
-                            AssetImage('assets/icon_launcher_foreground.png')),
+                            AssetImage('assets/shopping-bag.png')),
                   ),
                 ),
               ),

@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../models/authentication_model.dart';
+import '../../../../../provider/Cart_Provider/cart_Provider.dart';
 import '../../account/add_delivery_address.dart';
 
 class AddressOptionList extends StatefulWidget {
@@ -16,7 +18,9 @@ class _AddressOptionListState extends State<AddressOptionList> {
   AuthenticationModel _Auth = AuthenticationModel();
   @override
   Widget build(BuildContext context) {
+    var addressIndex = Provider.of<CartProvider>(context);
     return Container(
+      height: 385,
       child: StreamBuilder(
           stream: fireStore
               .collection('User')
@@ -36,7 +40,7 @@ class _AddressOptionListState extends State<AddressOptionList> {
 
               return SizedBox(
                 // color: Colors.yellowAccent,
-                height: MediaQuery.of(context).size.height - 138.7,
+                // height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
                 child: Column(
                   children: [
@@ -63,185 +67,233 @@ class _AddressOptionListState extends State<AddressOptionList> {
                     ),
                     //list view builder for addresses
 
-                    ListView.builder(
-                        // scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemCount: data.size,
-                        itemBuilder: (context, i) {
-                          var list = data.docs[i];
-                          return Center(
-                              child: Container(
-                            padding: const EdgeInsets.only(
-                              left: 6,
-                              right: 6,
-                            ),
-                            // color: Colors.red,
-                            child: InkWell(
-                              onTap: () {
-                                print(i);
-                              },
-                              child: Card(
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                    Container(
+                      height: 270,
+                      child: ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: data.size,
+                          itemBuilder: (context, i) {
+                            var list = data.docs[i];
+                            return Center(
+                                child: Container(
+                              margin: const EdgeInsets.symmetric(
+                                  vertical: 6, horizontal: 12),
+                              decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(4)),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        offset: Offset(.5, .5),
+                                        color: Colors.black12,
+                                        blurRadius: 1,
+                                        spreadRadius: 1)
+                                  ]),
+
+                              // color: Colors.red,
+                              child: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(4)),
+                                  onTap: () {
+                                    print("$i : $addressIndex");
+
+                                    setState(() {
+                                      addressIndex.addressIndex = i;
+                                      Navigator.pop(context);
+                                    });
+                                    print("$i : $addressIndex");
+                                  },
+                                  child: Container(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 2),
+                                    // decoration: BoxDecoration(
+                                    //     color: Colors.white,
+                                    //     borderRadius:
+                                    //         BorderRadius.all(Radius.circular(4)),
+                                    //     boxShadow: [
+                                    //       BoxShadow(
+                                    //           offset: Offset(.5, .5),
+                                    //           color: Colors.black12,
+                                    //           blurRadius: 1,
+                                    //           spreadRadius: 1)
+                                    //     ]),
+                                    child: Column(
                                       children: [
-                                        Container(
-                                          width: 300,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 12),
-                                                child: Container(
-                                                  child: Text(
-                                                    list['deli_name']
-                                                                .toString()
-                                                                .length >
-                                                            20
-                                                        ? '${list['deli_name'].toString().substring(0, 20)}...'
-                                                        : list['deli_name'],
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: TextStyle(
-                                                        color: Colors.black87
-                                                            .withOpacity(.6),
-                                                        fontSize: 16,
-                                                        fontWeight:
-                                                            FontWeight.w500),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Container(
+                                              width: 300,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 12),
+                                                    child: Container(
+                                                      child: Text(
+                                                        list['deli_name']
+                                                                    .toString()
+                                                                    .length >
+                                                                20
+                                                            ? '${list['deli_name'].toString().substring(0, 20)}...'
+                                                            : list['deli_name'],
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: TextStyle(
+                                                            color: Colors
+                                                                .black87
+                                                                .withOpacity(
+                                                                    .6),
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w500),
+                                                      ),
+                                                    ),
                                                   ),
-                                                ),
-                                              ),
-                                              list['addressType'] != "null"
-                                                  ? Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 10),
-                                                      child: Container(
-                                                          width: 40,
+                                                  list['addressType'] != "null"
+                                                      ? Padding(
                                                           padding:
                                                               const EdgeInsets
+                                                                      .only(
+                                                                  left: 10),
+                                                          child: Container(
+                                                              width: 40,
+                                                              padding: const EdgeInsets
                                                                       .symmetric(
                                                                   vertical: 2,
                                                                   horizontal:
                                                                       4),
-                                                          decoration: BoxDecoration(
-                                                              borderRadius:
-                                                                  const BorderRadius
+                                                              decoration: BoxDecoration(
+                                                                  borderRadius: const BorderRadius
                                                                           .all(
                                                                       Radius.circular(
                                                                           20)),
-                                                              color: Colors
-                                                                  .grey[300]),
-                                                          child: Text(
-                                                            list['addressType']
-                                                                .toString()
-                                                                .toUpperCase(),
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style:
-                                                                const TextStyle(
-                                                                    fontSize:
-                                                                        10),
-                                                          )),
-                                                    )
-                                                  : Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 10),
-                                                      child: Container(
-                                                        width: 40,
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .symmetric(
-                                                                vertical: 2,
-                                                                horizontal: 4),
-                                                        decoration: const BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
+                                                                  color: Colors
+                                                                          .grey[
+                                                                      300]),
+                                                              child: Text(
+                                                                list['addressType']
+                                                                    .toString()
+                                                                    .toUpperCase(),
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style:
+                                                                    const TextStyle(
+                                                                        fontSize:
+                                                                            10),
+                                                              )),
+                                                        )
+                                                      : Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  left: 10),
+                                                          child: Container(
+                                                            width: 40,
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .symmetric(
+                                                                    vertical: 2,
+                                                                    horizontal:
+                                                                        4),
+                                                            decoration: const BoxDecoration(
+                                                                borderRadius: BorderRadius
                                                                     .all(Radius
                                                                         .circular(
                                                                             20)),
-                                                            color: Colors
-                                                                .transparent),
-                                                      )),
-                                            ],
-                                          ),
+                                                                color: Colors
+                                                                    .transparent),
+                                                          )),
+                                                ],
+                                              ),
+                                            ),
+                                            PopupMenuButton(
+                                              onSelected: (val) {
+                                                if (val == 0) {
+                                                  Navigator.of(context).push(
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              AddDeliveryAddress(
+                                                                doc: list,
+                                                                argument: const [
+                                                                  false
+                                                                ],
+                                                              )));
+                                                }
+                                              },
+                                              padding: const EdgeInsets.all(0),
+                                              offset: const Offset(0, 38),
+                                              icon: const Icon(Icons.more_vert),
+                                              itemBuilder:
+                                                  (BuildContext context) {
+                                                return [
+                                                  PopupMenuItem(
+                                                      value: 0,
+                                                      onTap: () {
+                                                        print(list);
+                                                      },
+                                                      child:
+                                                          const Text('Edit')),
+                                                  // PopupMenuItem(
+                                                  //     onTap: () {
+                                                  //       _geoControl
+                                                  //           .deleteAddress(
+                                                  //           list);
+                                                  //     },
+                                                  //     child:
+                                                  //     const Text('Delete')),
+                                                ];
+                                              },
+                                            )
+                                          ],
                                         ),
-                                        PopupMenuButton(
-                                          onSelected: (val) {
-                                            if (val == 0) {
-                                              Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          AddDeliveryAddress(
-                                                            doc: list,
-                                                            argument: const [
-                                                              false
-                                                            ],
-                                                          )));
-                                            }
-                                          },
-                                          padding: const EdgeInsets.all(0),
-                                          offset: const Offset(0, 38),
-                                          icon: const Icon(Icons.more_vert),
-                                          itemBuilder: (BuildContext context) {
-                                            return [
-                                              PopupMenuItem(
-                                                  value: 0,
-                                                  onTap: () {
-                                                    print(list);
-                                                  },
-                                                  child: const Text('Edit')),
-                                              // PopupMenuItem(
-                                              //     onTap: () {
-                                              //       _geoControl
-                                              //           .deleteAddress(
-                                              //           list);
-                                              //     },
-                                              //     child:
-                                              //     const Text('Delete')),
-                                            ];
-                                          },
-                                        )
+                                        Container(
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            margin: const EdgeInsets.only(
+                                                left: 12, right: 60),
+                                            child: Text(
+                                              '${list['deli_street']}, ${list['deli_area']}, ${list['deli_city']}',
+                                            )),
+                                        Container(
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          margin: const EdgeInsets.only(
+                                              top: 4, left: 12, right: 60),
+                                          child: Text(
+                                              '${list['deli_state']} - ${list['deli_pincode']}'),
+                                        ),
+                                        Container(
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            padding: const EdgeInsets.only(
+                                              top: 10,
+                                              bottom: 5,
+                                              left: 12,
+                                            ),
+                                            child: Text(
+                                              list['deli_mobile'],
+                                              textAlign: TextAlign.left,
+                                            )),
                                       ],
                                     ),
-                                    Container(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        margin: const EdgeInsets.only(
-                                            left: 12, right: 60),
-                                        child: Text(
-                                          '${list['deli_street']}, ${list['deli_area']}, ${list['deli_city']}',
-                                        )),
-                                    Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      margin: const EdgeInsets.only(
-                                          top: 4, left: 12, right: 60),
-                                      child: Text(
-                                          '${list['deli_state']} - ${list['deli_pincode']}'),
-                                    ),
-                                    Container(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        padding: const EdgeInsets.only(
-                                          top: 10,
-                                          bottom: 5,
-                                          left: 12,
-                                        ),
-                                        child: Text(
-                                          list['deli_mobile'],
-                                          textAlign: TextAlign.left,
-                                        )),
-                                  ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ));
-                        }),
+                            ));
+                          }),
+                    ),
                     //
                     //
                     //

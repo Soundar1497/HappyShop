@@ -1,7 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../../provider/Cart_Provider/cart_Provider.dart';
 import '../../../widgets/carousel_indicator.dart';
 import '../../../widgets/star_rating_icon/star_rating_icon.dart';
 
@@ -27,6 +29,7 @@ class _MobileListDetailState extends State<MobileListDetail> {
   int active = 0;
   @override
   Widget build(BuildContext context) {
+    var cartProvider = Provider.of<CartProvider>(context);
     // widget.productTitle,
     // widget.productPhotos,
     // rating,
@@ -505,8 +508,58 @@ class _MobileListDetailState extends State<MobileListDetail> {
                           child: Material(
                             color: Colors.transparent,
                             child: InkWell(
-                              onTap: () {},
-                              borderRadius: BorderRadius.only(
+                              onTap: () {
+                                if (cartProvider.cartList.isNotEmpty) {
+                                  bool? isNull;
+                                  for (var e in cartProvider.cartList) {
+                                    print(
+                                        "e[0]: ${e[0]} \n argument : ${widget.arguments![0]}");
+                                    if (e[0] == widget.arguments![0]) {
+                                      isNull = false;
+                                      print("isnull = $isNull");
+                                      break;
+                                    } else {
+                                      isNull = true;
+                                      print("isnull = $isNull");
+                                    }
+                                  }
+
+                                  //
+
+                                  if (isNull!) {
+                                    setState(() {
+                                      cartProvider.cartList = widget.arguments;
+                                      print(
+                                          "list is add ${cartProvider.cartList.length + 1} th element : ${cartProvider.cartList}");
+                                    });
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            duration:
+                                                Duration(milliseconds: 400),
+                                            content: Text(
+                                                "Product Added to the Cart Successfully")));
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            duration:
+                                                Duration(milliseconds: 600),
+                                            content: Text(
+                                                "Product is already added to cart")));
+                                  }
+                                } else {
+                                  setState(() {
+                                    cartProvider.cartList = widget.arguments;
+                                    print(
+                                        "list is empty and add first element : ${cartProvider.cartList}");
+                                  });
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          duration: Duration(milliseconds: 600),
+                                          content: Text(
+                                              "Product Added to the Cart Successfully")));
+                                }
+                              },
+                              borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(20)),
                               child: Container(
                                 width: MediaQuery.of(context).size.width,

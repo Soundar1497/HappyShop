@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:project_1/app/provider/Cart_Provider/cart_Provider.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../models/authentication_model.dart';
 import 'addressOptionList.dart';
@@ -17,6 +19,8 @@ class _AddressSelectionState extends State<AddressSelection> {
 
   @override
   Widget build(BuildContext context) {
+    var addressIndex = Provider.of<CartProvider>(context);
+    print("At start addressIndex  : ${addressIndex.addressIndex} ");
     return StreamBuilder(
         stream: fireStore
             .collection('User')
@@ -34,7 +38,8 @@ class _AddressSelectionState extends State<AddressSelection> {
 
             if (data.docs.isEmpty != true) {
               var i = 0;
-              var listAddress = data.docs[i];
+              print("data snapshot size : ${data.size}");
+              var listAddress = data.docs[addressIndex.addressIndex];
               //
               //
 
@@ -51,7 +56,6 @@ class _AddressSelectionState extends State<AddressSelection> {
 
               //
               //
-              print("data snapshot size : ${data.size}");
               return Container(
                 alignment: Alignment.centerLeft,
                 width: MediaQuery.of(context).size.width,
@@ -211,6 +215,8 @@ addressOption(BuildContext context) {
   print("object 3");
 
   return showModalBottomSheet(
+      useSafeArea: true,
+      isScrollControlled: true,
       context: context,
       builder: (context) {
         return const AddressOptionList();

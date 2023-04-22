@@ -453,7 +453,8 @@ class _EditProfileState extends State<EditProfile> {
                     );
                   });
             }
-            // if (verifyValue == true) {
+            /*
+                        // if (verifyValue == true) {
             //   print(
             //       "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             //   userDetail.update({'$keyValue': '$value'}).then((_) async {
@@ -590,6 +591,8 @@ class _EditProfileState extends State<EditProfile> {
             //     }).catchError((err) => print('Failed: $err'));
             //   }
             // }
+
+             */
           }
 
           //

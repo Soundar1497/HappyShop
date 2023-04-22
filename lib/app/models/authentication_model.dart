@@ -56,6 +56,9 @@ class AuthenticationModel {
   static String firstPage = '/firstPage';
   String get homePage => home;
 
+  //
+  //
+
   Future<String> signUp({
     required String email,
     required String password,

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../../../provider/Cart_Provider/cart_Provider.dart';
+import '../../dashboard/dashboard.dart';
+import 'cart_product_list/cart_product_list.dart';
 import 'delivery_address_section/addressSelection.dart';
 
 class Cart extends StatefulWidget {
@@ -23,6 +27,22 @@ class _CartState extends State<Cart> {
 
   @override
   Widget build(BuildContext context) {
+    var cartProvider = Provider.of<CartProvider>(context);
+
+    print("cartList.length : ${cartProvider.cartList.length}");
+    for (var element in cartProvider.cartList) {
+      if (element[0] == "realme 10 Pro 5G (6GB RAM, 128GB, Hyperspace)") {
+        print(
+            "cartList specific element index : ${cartProvider.cartList.indexOf(element)}");
+        break;
+      }
+    }
+
+    cartProvider.cartList.forEach((element) {
+      print(
+          "cartList for each element \n element[${cartProvider.cartList.indexOf(element)}] : ${element[0]}");
+    });
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -41,11 +61,38 @@ class _CartState extends State<Cart> {
                   style: TextStyle(fontSize: 17, color: Colors.white),
                 ))),
       ),
-      body: Column(
-        children: const [
-          AddressSelection(),
-        ],
-      ),
+      body: data.isEmpty
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    'Your cart is empty!',
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Dashboard(
+                                      valueIndex: 1,
+                                    )),
+                            (Route route) => false);
+                      },
+                      child: const Text('Shop now'))
+                ],
+              ),
+            )
+          : Column(
+              children: [
+                const AddressSelection(),
+                CartProductList(cartData: data),
+              ],
+            ),
     );
   }
 }

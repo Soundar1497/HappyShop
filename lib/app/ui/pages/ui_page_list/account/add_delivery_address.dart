@@ -81,10 +81,12 @@ class _AddDeliveryAddressState extends State<AddDeliveryAddress> {
         _geoLocatorControl.deliveryState.text == _savedState &&
         _geoLocatorControl.deliveryCity.text == _savedCity &&
         _geoLocatorControl.deliveryStreet.text == _savedStreet &&
+        _geoLocatorControl.deliveryArea.text == _savedArea &&
         _geoLocatorControl.addressTypeHome == _home &&
         _geoLocatorControl.addressTypeWork == _work) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("Address Not Changed")));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          duration: Duration(milliseconds: 400),
+          content: Text("Address Not Changed")));
     } else {
       check(_geoLocatorControl.deliveryName.text, _savedName, 'deli_name', doc,
           popBool, provider);

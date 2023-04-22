@@ -112,10 +112,10 @@ class _CategoriesState extends State<Categories> {
                     if (data.hasError) {
                     } else if (data.connectionState ==
                         ConnectionState.waiting) {
-                      return CircularProgressIndicator();
+                      return const CircularProgressIndicator();
                     }
                     var item = data.data;
-                    return Container(
+                    return SizedBox(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height / 1.65,
                       child: GridView.builder(
@@ -126,7 +126,7 @@ class _CategoriesState extends State<Categories> {
                                 mainAxisSpacing: 15,
                                 crossAxisCount: 4,
                                 crossAxisSpacing: 10),
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                             left: 10, right: 10, top: 10, bottom: 10),
                         scrollDirection: Axis.vertical,
                         itemCount: item?.length,
@@ -137,16 +137,13 @@ class _CategoriesState extends State<Categories> {
                             onTap: () {
                               Navigator.pushNamed(
                                   context, item![1].link.toString());
-                              print("${item?[i].proName.toString()} is Tapped");
+                              print("${item[i].proName.toString()} is Tapped");
                             },
                           );
                         },
                       ),
                     );
                   }),
-              Divider(
-                thickness: 1,
-              ),
             ],
           ),
         ),
