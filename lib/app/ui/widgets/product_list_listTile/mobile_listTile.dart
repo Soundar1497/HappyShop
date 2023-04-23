@@ -45,7 +45,7 @@ class _MobileListTileState extends State<MobileListTile> {
       child: Stack(children: [
         Container(
           // width: MediaQuery.of(context).size.width,
-          height: 200,
+          // height: 200,
           decoration: const BoxDecoration(
               boxShadow: [
                 BoxShadow(
@@ -246,7 +246,7 @@ class _MobileListTileState extends State<MobileListTile> {
             ),
           ),
         ),
-        Container(
+        SizedBox(
           height: 200,
           width: MediaQuery.of(context).size.width,
           child: Material(

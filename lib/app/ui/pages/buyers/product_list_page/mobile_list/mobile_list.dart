@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:project_1/app/api/mobileList_Api.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../models/mobile_list_model.dart';
+import '../../../../../provider/Cart_Provider/cart_Provider.dart';
+import '../../../../widgets/cart_navigator_icon.dart';
 import '../../../../widgets/filter_bar_widget/filter_bar.dart';
 import '../../../../widgets/product_list_listTile/mobile_listTile.dart';
 
@@ -74,6 +77,8 @@ class _MobileListState extends State<MobileList> {
 
   @override
   Widget build(BuildContext context) {
+    var cartProvider = Provider.of<CartProvider>(context);
+
     if (mounted) {
       return Scaffold(
           appBar: AppBar(
@@ -85,9 +90,9 @@ class _MobileListState extends State<MobileList> {
               IconButton(
                   onPressed: () {},
                   icon: const Icon(Icons.favorite_border_outlined)),
-              IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.shopping_cart_outlined)),
+              CartNavigatorIcon(
+                isNavigate: true,
+              ),
             ],
           ),
           body: RefreshIndicator(
@@ -96,85 +101,56 @@ class _MobileListState extends State<MobileList> {
                   Navigator.pushReplacementNamed(context, '/MobileList');
                 });
               },
-              child: Container(
-                height: MediaQuery.of(context).size.height,
-                child: Column(
-                  children: [
-                    const CustomFilterBar(),
-                    RefreshIndicator(
-                      onRefresh: () async {
-                        setState(() {
-                          Navigator.pushReplacementNamed(
-                              context, '/MobileList');
-                        });
-                      },
-                      child: SingleChildScrollView(
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        child: Column(
-                          children: [
-                            FutureBuilder(
-                                future: getMobileList(),
-                                builder: (context,
-                                    AsyncSnapshot<List<MobileListModel>> data) {
-                                  if (data.hasError) {
-                                  } else if (data.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return CircularProgressIndicator();
-                                  }
-                                  //
+              child: Column(
+                children: [
+                  const CustomFilterBar(),
+                  FutureBuilder(
+                      future: getMobileList(),
+                      builder:
+                          (context, AsyncSnapshot<List<MobileListModel>> data) {
+                        if (data.hasError) {
+                        } else if (data.connectionState ==
+                            ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        }
+                        //
 
-                                  var item1 = data.data;
-                                  print('length of items : ${item1?.length}');
+                        var item1 = data.data;
+                        print('length of items : ${item1?.length}');
 
-                                  //
+                        //
 
-                                  return Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: MediaQuery.of(context).size.height -
-                                        130,
-                                    child: GridView.builder(
-                                      physics:
-                                          const AlwaysScrollableScrollPhysics(),
-                                      gridDelegate:
-                                          const SliverGridDelegateWithFixedCrossAxisCount(
-                                              childAspectRatio: 2,
-                                              mainAxisSpacing: 15,
-                                              crossAxisCount: 1,
-                                              crossAxisSpacing: 10),
-                                      padding: const EdgeInsets.only(
-                                          left: 10,
-                                          right: 10,
-                                          top: 10,
-                                          bottom: 10),
-                                      scrollDirection: Axis.vertical,
-                                      itemCount: item1?.length,
-                                      itemBuilder: (BuildContext context, i) {
-                                        print('Index of grid view : $i');
-                                        return MobileListTile(
-                                          productTitle:
-                                              item1![i].productTitle.toString(),
-                                          productPhotos: item1[i].productPhotos,
-                                          productRating: item1[i].productRating,
-                                          price: item1[i].priceList,
-                                          productReviews:
-                                              item1[i].productReviews,
-                                          productDescription:
-                                              item1[i].productDescription,
-                                          productAttributes:
-                                              item1[i].productAttributes,
-                                          shipping: item1[i].shipping,
-                                          storeName: item1[i].storeName,
-                                        );
-                                      },
-                                    ),
-                                  );
-                                }),
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                ),
+                        return Expanded(
+                          child: GridView.builder(
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                    childAspectRatio: 2,
+                                    mainAxisSpacing: 15,
+                                    crossAxisCount: 1,
+                                    crossAxisSpacing: 10),
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 10, bottom: 10),
+                            scrollDirection: Axis.vertical,
+                            itemCount: item1?.length,
+                            itemBuilder: (BuildContext context, i) {
+                              print('Index of grid view : $i');
+                              return MobileListTile(
+                                productTitle: item1![i].productTitle.toString(),
+                                productPhotos: item1[i].productPhotos,
+                                productRating: item1[i].productRating,
+                                price: item1[i].priceList,
+                                productReviews: item1[i].productReviews,
+                                productDescription: item1[i].productDescription,
+                                productAttributes: item1[i].productAttributes,
+                                shipping: item1[i].shipping,
+                                storeName: item1[i].storeName,
+                              );
+                            },
+                          ),
+                        );
+                      })
+                ],
               )));
     } else
       return Container();

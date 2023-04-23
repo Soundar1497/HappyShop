@@ -5,6 +5,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../controllers/authentication.dart';
 import '../../../controllers/carousel_control.dart';
 import '../../../controllers/filter_bar_control/sortby_contorl.dart';
+import '../../../provider/Cart_Provider/cart_Provider.dart';
+import '../../widgets/cart_navigator_icon.dart';
 import '../ui_page_list/account/Account.dart';
 import '../ui_page_list/cart/cart.dart';
 import '../ui_page_list/categories/categories.dart';
@@ -69,6 +71,8 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
+    var cartProvider = Provider.of<CartProvider>(context);
+
     // old sample
 
     /*
@@ -147,13 +151,13 @@ class _DashboardState extends State<Dashboard> {
                 fontSize: 12,
               ),
               selectedFontSize: 12,
-              items: const [
+              items: [
                 BottomNavigationBarItem(
                   label: 'Home',
                   backgroundColor: Colors.white70,
                   icon: Icon(Icons.home_outlined),
                 ),
-                BottomNavigationBarItem(
+                const BottomNavigationBarItem(
                   label: 'Categories',
                   icon: Icon(Icons.category_outlined),
                 ),
@@ -162,10 +166,23 @@ class _DashboardState extends State<Dashboard> {
                 //   icon: Icon(Icons.notifications_outlined),
                 // ),
                 BottomNavigationBarItem(
-                  label: 'Cart',
-                  icon: Icon(Icons.shopping_cart_outlined),
-                ),
-                BottomNavigationBarItem(
+                    label: 'Cart',
+                    icon: Stack(children: <Widget>[
+                      Icon(Icons.shopping_cart_outlined),
+                      Positioned(
+                        // draw a red marble
+                        bottom: 10,
+                        left: 12,
+                        child: cartProvider.cartLength != 0
+                            ? CartNavigatorIcon1(
+                                isVisible: true,
+                              )
+                            : CartNavigatorIcon1(
+                                isVisible: false,
+                              ),
+                      )
+                    ])),
+                const BottomNavigationBarItem(
                   label: 'Account',
                   icon: Icon(Icons.account_circle_outlined),
                 ),

@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../provider/Cart_Provider/cart_Provider.dart';
 import '../../../widgets/carousel_indicator.dart';
+import '../../../widgets/cart_navigator_icon.dart';
 import '../../../widgets/star_rating_icon/star_rating_icon.dart';
 
 class MobileListDetail extends StatefulWidget {
@@ -81,9 +82,9 @@ class _MobileListDetailState extends State<MobileListDetail> {
               IconButton(
                   onPressed: () {},
                   icon: const Icon(Icons.favorite_border_outlined)),
-              IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.shopping_cart_outlined)),
+              CartNavigatorIcon(
+                isNavigate: true,
+              ),
             ],
           ),
           body: SizedBox(

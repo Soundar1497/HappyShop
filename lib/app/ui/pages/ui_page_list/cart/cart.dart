@@ -14,34 +14,36 @@ class Cart extends StatefulWidget {
 }
 
 class _CartState extends State<Cart> {
-  List data = [];
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    setState(() {
-      data = val;
-    });
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     var cartProvider = Provider.of<CartProvider>(context);
 
-    print("cartList.length : ${cartProvider.cartList.length}");
-    for (var element in cartProvider.cartList) {
-      if (element[0] == "realme 10 Pro 5G (6GB RAM, 128GB, Hyperspace)") {
-        print(
-            "cartList specific element index : ${cartProvider.cartList.indexOf(element)}");
-        break;
-      }
-    }
-
-    cartProvider.cartList.forEach((element) {
-      print(
-          "cartList for each element \n element[${cartProvider.cartList.indexOf(element)}] : ${element[0]}");
-    });
+    // cart list variable
+    //
+    // var cartList = cartProvider.cartList;
+    //
+    //
+    //
+    // print("cartList.length : ${cartProvider.cartList.length}");
+    // for (var element in cartProvider.cartList) {
+    //   if (element[0] == "realme 10 Pro 5G (6GB RAM, 128GB, Hyperspace)") {
+    //     print(
+    //         "cartList specific element index : ${cartProvider.cartList.indexOf(element)}");
+    //     break;
+    //   }
+    // }
+    //
+    // cartProvider.cartList.forEach((element) {
+    //   print(
+    //       "cartList for each element \n element[${cartProvider.cartList.indexOf(element)}] : ${element[0]}");
+    // });
 
     return Scaffold(
       appBar: AppBar(
@@ -56,12 +58,12 @@ class _CartState extends State<Cart> {
             preferredSize: const Size(double.infinity, 25),
             child: Container(
                 padding: const EdgeInsets.only(top: 1, bottom: 10),
-                child: const Text(
-                  '0 items',
+                child: Text(
+                  '${cartProvider.cartLength} items',
                   style: TextStyle(fontSize: 17, color: Colors.white),
                 ))),
       ),
-      body: data.isEmpty
+      body: cartProvider.cartList.isEmpty
           ? Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -88,9 +90,9 @@ class _CartState extends State<Cart> {
               ),
             )
           : Column(
-              children: [
-                const AddressSelection(),
-                CartProductList(cartData: data),
+              children: const [
+                AddressSelection(),
+                CartProductList(),
               ],
             ),
     );
