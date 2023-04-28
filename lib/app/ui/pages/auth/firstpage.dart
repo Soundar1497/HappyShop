@@ -72,11 +72,11 @@ class _FirstScreenState extends State<FirstScreen> {
                     ),
                     child: Center(
                       child: Text(
-                        'Happy   Shop',
+                        'Happy   Shopping',
                         style: TextStyle(
                             fontStyle: FontStyle.italic,
                             fontWeight: FontWeight.bold,
-                            fontSize: 50,
+                            fontSize: 42,
                             color: Colors.white54.withOpacity(.5),
                             shadows: [
                               Shadow(

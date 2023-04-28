@@ -35,11 +35,18 @@ class _DashboardState extends State<Dashboard> {
     const Account(),
   ];
 
+
+
+
   void value(int index) {
     setState(() {
       _listener.pageIndex = index;
     });
   }
+
+
+
+
 
   Authen _authen = Authen();
   SortByControl _sortByControl = SortByControl();
@@ -62,9 +69,15 @@ class _DashboardState extends State<Dashboard> {
     _sortByControl.getSortByData;
     print(_authen.email.text);
 
+
+
+
     if (widget.valueIndex != null) {
       value(widget.valueIndex!);
     }
+
+
+
   }
 
   var ctime;

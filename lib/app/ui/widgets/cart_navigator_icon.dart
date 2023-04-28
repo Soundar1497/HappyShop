@@ -27,15 +27,22 @@ class _CartNavigatorIconState extends State<CartNavigatorIcon> {
             ? Text('${cartProvider.cartLength}')
             : const Text(''),
         child: IconButton(
+            splashRadius: 35,
             onPressed: () {
               widget.isNavigate
-                  ? Navigator.pushAndRemoveUntil(
+                  ?
+                  
+                  
+                   Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
                           builder: (context) => Dashboard(
                                 valueIndex: 2,
                               )),
                       (Route route) => false)
+
+
+                      
                   : null;
             },
             icon: const Icon(Icons.shopping_cart_outlined)),

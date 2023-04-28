@@ -43,9 +43,6 @@ class _CategoryItemState extends State<CategoryItem> {
                   borderRadius: BorderRadius.all(Radius.circular(50)),
                   child: Image.network(
                     widget.img,
-                    // "",
-                    // items[i].summerCardData,
-                    // items[i].summerOffer.img.toString(),
                     fit: BoxFit.fill,
                     alignment: Alignment.center,
                     errorBuilder: (context, error, stackTraces) {
@@ -57,38 +54,14 @@ class _CategoryItemState extends State<CategoryItem> {
                         ),
                       );
                     },
-                    loadingBuilder:
-                        /*
-                                //         (BuildContext context,
-                                //         Widget child, wasSynchronouslyLoaded) {
-                                //   if (wasSynchronouslyLoaded == true) {
-                                //     return Container(
-                                //         width: 20,
-                                //         height: 20,
-                                //         child: const CircularProgressIndicator());
-                                //   } else {
-                                //     return child;
-                                //   }
-                                // }
-
-                                     */
-
-                        (BuildContext context, Widget child,
-                            ImageChunkEvent? loadingProgress) {
-                      // if (loadingProgress.hashCode == null) {
-                      //   return const Center(
-                      //       child: Text('Loading...'));
-                      // } else if (loadingProgress == null) {
-                      //   return child;
-                      // }
-                      // return const Center(
-                      //     child: Text('Loading...'));
+                    loadingBuilder: (BuildContext context, Widget child,
+                        ImageChunkEvent? loadingProgress) {
                       if (loadingProgress.hashCode == null) {
                         return Center(
                             child: Container(
                           width: 20,
                           height: 20,
-                          child: CircularProgressIndicator(
+                          child: const CircularProgressIndicator(
                             strokeWidth: 3,
                           ),
                         ));

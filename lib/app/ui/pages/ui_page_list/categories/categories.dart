@@ -104,47 +104,49 @@ class _CategoriesState extends State<Categories> {
         },
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
-          child: Column(
-            children: [
-              FutureBuilder(
-                  future: readCategory(),
-                  builder: (context, AsyncSnapshot<List<CategoryList>> data) {
-                    if (data.hasError) {
-                    } else if (data.connectionState ==
-                        ConnectionState.waiting) {
-                      return const CircularProgressIndicator();
-                    }
-                    var item = data.data;
-                    return SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height / 1.65,
-                      child: GridView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                childAspectRatio: .77,
-                                mainAxisSpacing: 15,
-                                crossAxisCount: 4,
-                                crossAxisSpacing: 10),
-                        padding: const EdgeInsets.only(
-                            left: 10, right: 10, top: 10, bottom: 10),
-                        scrollDirection: Axis.vertical,
-                        itemCount: item?.length,
-                        itemBuilder: (BuildContext context, i) {
-                          return CategoryItem(
-                            data: "${item?[i].proName.toString()}",
-                            img: "${item?[i].img.toString()}",
-                            onTap: () {
-                              Navigator.pushNamed(
-                                  context, item![1].link.toString());
-                              print("${item[i].proName.toString()} is Tapped");
-                            },
-                          );
-                        },
-                      ),
-                    );
-                  }),
-            ],
+          child: Flexible(
+            child: Column(
+              children: [
+                FutureBuilder(
+                    future: readCategory(),
+                    builder: (context, AsyncSnapshot<List<CategoryList>> data) {
+                      if (data.hasError) {
+                      } else if (data.connectionState ==
+                          ConnectionState.waiting) {
+                        return const CircularProgressIndicator();
+                      }
+                      var item = data.data;
+                      return SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height - 140,
+                        child: GridView.builder(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                  childAspectRatio: .77,
+                                  mainAxisSpacing: 15,
+                                  crossAxisCount: 4,
+                                  crossAxisSpacing: 10),
+                          padding: const EdgeInsets.only(
+                              left: 10, right: 10, top: 10, bottom: 10),
+                          scrollDirection: Axis.vertical,
+                          itemCount: item?.length,
+                          itemBuilder: (BuildContext context, i) {
+                            return CategoryItem(
+                              data: "${item?[i].proName.toString()}",
+                              img: "${item?[i].img.toString()}",
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, item![1].link.toString());
+                                print(
+                                    "${item[i].proName.toString()} is Tapped");
+                              },
+                            );
+                          },
+                        ),
+                      );
+                    }),
+              ],
+            ),
           ),
         ),
       ),

@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen>
   void animateImage() {
     _imageController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 2200),
+      duration: const Duration(milliseconds: 2500),
     );
     _imageAnimation = Tween<double>(
       begin: 0,
@@ -35,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   _navtofirst() async {
-    await Future.delayed(const Duration(milliseconds: 3500), () {});
+    await Future.delayed(const Duration(milliseconds: 4000), () {});
     // await Future.delayed(const Duration(milliseconds: 0), () {});
 
     Navigator.pushReplacement(
@@ -102,11 +102,10 @@ class _SplashScreenState extends State<SplashScreen>
                 child: Container(
                   height: 150,
                   // color: Colors.red,
-                  child: const ClipRect(
+                  child: const ClipRRect(
+                    borderRadius: BorderRadius.all(Radius.circular(80)),
                     clipBehavior: Clip.antiAlias,
-                    child: Image(
-                        image:
-                            AssetImage('assets/shopping-bag.png')),
+                    child: Image(image: AssetImage('assets/playstore.png')),
                   ),
                 ),
               ),
@@ -121,7 +120,7 @@ class _SplashScreenState extends State<SplashScreen>
               // color: Colors.blue,
               child: DefaultTextStyle(
                 textHeightBehavior:
-                    TextHeightBehavior(applyHeightToFirstAscent: true),
+                    const TextHeightBehavior(applyHeightToFirstAscent: true),
                 style: const TextStyle(
                   fontSize: 25.0,
                   fontWeight: FontWeight.bold,
@@ -130,8 +129,8 @@ class _SplashScreenState extends State<SplashScreen>
                 child: AnimatedTextKit(
                   isRepeatingAnimation: false,
                   animatedTexts: [
-                    WavyAnimatedText('Happy Shop',
-                        speed: const Duration(milliseconds: 250)),
+                    WavyAnimatedText('Happy Shopping',
+                        speed: const Duration(milliseconds: 200)),
                   ],
                 ),
               ),

@@ -189,21 +189,24 @@ class _AppBarHomePageState extends State<AppBarHomePage> {
             ),
             child: Row(
               children: [
-                SizedBox(
-                    height: 30,
-                    child: Transform.scale(
-                      scale: 2,
-                      child: const Image(
-                          image: AssetImage(
-                              'assets/icon_launcher_foreground.png')),
-                    )),
+                Padding(
+                  padding: EdgeInsets.only(left: 20, right: 4),
+                  child: SizedBox(
+                      height: 35,
+                      child: Transform.scale(
+                        scale: 2.5,
+                        child: const Image(
+                            image: AssetImage('assets/playstore.png')),
+                      )),
+                ),
                 const SizedBox(
-                  width: 8,
+                  width: 20,
                 ),
                 const Text(
-                  'HAPPY SHOP',
+                  'HAPPY SHOPPING',
+                  textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Color(0xFF6FB403),
+                    color: Color.fromRGBO(246, 103, 127, 1.0),
                     fontSize: 25,
                     fontStyle: FontStyle.italic,
                     fontWeight: FontWeight.w900,

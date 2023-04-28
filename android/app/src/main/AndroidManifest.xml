@@ -3,9 +3,9 @@
     package="com.example.project_1">
 
    <application
-        android:label="Happy Shop"
+        android:label="Happy Shopping"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_newlogo">
         <activity
             android:name=".MainActivity"
             android:exported="true"

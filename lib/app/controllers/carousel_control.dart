@@ -43,4 +43,9 @@ class CarouselListener extends ChangeNotifier {
     _pageIndex = value;
     notifyListeners();
   }
+
+
+
+
+  
 }
